@@ -68,7 +68,7 @@ include("header.php");
         display: flex;
         justify-content: space-between;
         font-size: 12px;
-
+       
     }
 </style>
 <div class="set">
@@ -92,8 +92,7 @@ include("header.php");
                 </div>
             </div>
             <div class="rem-forgott">
-                <div>
-                
+                <div>               
                     <input type="checkbox" style="display: block;"/>
                     <span>Remember Me</span>
                 </div>
