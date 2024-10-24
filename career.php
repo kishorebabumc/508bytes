@@ -2,6 +2,8 @@
 include('session.php');
 $_SESSION['Page'] = 'career';
 include("header.php");
+$job = mysqli_query($connection,"SELECT * FROM `jobs` WHERE Status = 1 ");
+$count = mysqli_num_rows($job);
 ?>
 
 <!-- inner banner -->
@@ -33,20 +35,27 @@ include("header.php");
                 the software development lifecycle.</h5>
         </div>
         <div class="grids-area-hny main-cont-wthree-fea row">
-            <div class="col-lg-4 col-md-6 grids-feature">
-                <div class="area-box">
-                    <!-- <span class="fab fa-aws "></span> -->
-                    <i class="fa-solid fa-code icon-color" style="font-size: 2rem;"></i>
-                    <h4><a href="#feature" class="title-head">Trainee Developer</a></h4>
-                    <p class="mb-4">Qualification : B.Tech
-                    <p>
-                    <p class="mb-4">Skill : Basic Programming Skill (HTML, CSS, Javascript) preferable.
-                    <p>
-                    <p class="mb-4">Location : Vijayawada, Andhara Pradhesh
-                    <p>
-                        <button onclick="window.location.href='view_details.php'" class="btn button-style">View Details</button>
-                </div>
-            </div>
+            <?php
+                if($count > 0){
+                    while($row = mysqli_fetch_assoc($job)){
+                        echo '<div class="col-lg-4 col-md-6 grids-feature">
+                                <div class="area-box">
+                                    <!-- <span class="fab fa-aws "></span> -->
+                                    <i class="fa-solid fa-code icon-color" style="font-size: 2rem;"></i>
+                                    <h4><a href="#feature" class="title-head">'.$row['Description'].'</a></h4>
+                                    <p class="mb-4">Qualification : '.$row['Qualification'].'
+                                    <p>
+                                    <p class="mb-4">Skill : '.$row['Skill'].'
+                                    <p>
+                                    <p class="mb-4">Location : '.$row['Location'].'
+                                    <p>
+                                        <a href="view_details.php?jobid='.$row['JobID'].'"><button  class="btn button-style">View Details</button></a>
+                                </div>                
+                            </div>';
+                    }
+                } 
+            
+            ?>            
         </div>
     </div>
     </div>

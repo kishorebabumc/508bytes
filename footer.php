@@ -97,7 +97,7 @@
     <!-- //move top -->
 
     <!-- common jquery plugin -->
-    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    
     <!-- //common jquery plugin -->
 
     <!-- banner image moving effect -->
@@ -262,7 +262,7 @@
     <!-- //theme switch js (light and dark)-->
 
     <!-- magnific popup -->
-    <script src="assets/js/jquery.magnific-popup.min.js"></script>
+    
     <script>
         $(document).ready(function () {
             $('.popup-with-zoom-anim').magnificPopup({

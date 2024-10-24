@@ -2,6 +2,16 @@
 include('session.php');
 $_SESSION['Page'] = 'career';
 include("header.php");
+if(isset($_GET['jobid'])){
+    $jodid = $_GET['jobid'];
+    $jobdetailsquery = mysqli_query($connection,"SELECT * FROM `jobs` WHERE JobID = '$jodid'");
+    $jobdetails = mysqli_fetch_assoc($jobdetailsquery);
+    $jobdescquery = mysqli_query($connection,"SELECT * FROM `JobDesc` WHERE JobID = '$jodid'");
+    $jobdesc = mysqli_fetch_assoc($jobdescquery);
+    $jobminqua = mysqli_query($connection,"SELECT * FROM `JobMinQua` WHERE JobID = '$jodid'");
+    $jobprefqua = mysqli_query($connection,"SELECT * FROM `JobPreQua` WHERE JobID = '$jodid'");
+
+}
 ?>
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
@@ -60,39 +70,35 @@ include("header.php");
 
                     <div>
 
-                        <h4 style="float:left;">Trainee Developer</h4>
-                        <p class="job-description" style="text-align:left; margin-left:20px; background-color:#EA6E23; color:whitesmoke;">Trainee Developer is not a full-time permanent opportunity, the training program is 12 months in duration.<strong>After 6 months the selected trainees paid monthly remuneration, thereafter 6 months and after completion of training the selected trainees are reviewed and taken as full time employee to the organization and fixed scales as per the norms.</strong> Recent graduates and also work experience in other industries may apply. Please complete your application before Oct 26, 2024, 11 PM IST.</p>
+                        <h4 style="float:left;"><?php echo $jobdetails['Description']; ?></h4>
+                        <p class="job-description" style="text-align:left; margin-left:20px; background-color:#E5F3FE;"><?php echo $jobdesc['FullDescription']; ?></p>
                     </div>
                     <div>
                         <h5>Minimum qualifications:</h5>
                         <ol class="job-qualification" style="text-align:left;">
-                            <li class="quali"> Bachelor's degree or equivalent practical experience.</li>
-                            <li class="quali">Ability to communicate in English fluently, to understand and execute instructions and learn via training documentations and presentations.</li>
+                             <?php 
+                                while($row = mysqli_fetch_assoc($jobminqua)){
+                                    echo '<li class="quali">'.$row['MinQualification'].'</li>';
+                                }
+
+                            ?>
                         </ol>
                     </div>
                     <div>
                         <h5>Preffered Qualifications</h5>
                         <ol class="job-qualification" style="display:block important;text-align:left;">
-                            <li class="quali">
-                                Technical graduates (B.Tech / BE) with programming skills are preferable.
-                            </li>
-                            <li class="quali">
-                                Ability to work with ambiguous tasks, find suitable solutions, and seek help or advice where appropriate.
-                            </li>
-                            <li class="quali">Ability to work independently and within a team framework.</li>
-                            <li class="quali">
-                                Interest in building a career in Software Technology
-                            </li>
-                            <li class="quali">
-                                Excellent problem solving and critical thinking skills.
-                            </li>
+                            <?php 
+                                while($row = mysqli_fetch_assoc($jobprefqua)){
+                                    echo '<li class="quali">'.$row['PreQualification'].'</li>';
+                                }
+
+                            ?>
                         </ol>
                     </div>
                     <div>
                         <h5>About the job</h5>
                         <p style="text-align:left; margin-left:20px;">
-                            The Trainee Developer is a program of 12 months offering training and learning the individuals in interested technologies in Software Industry.
-                            Selected Trainees are working in environment of live projects, and they have gain the knowledge as Full Stack Developer and end to end implementation of project and initial state to production stage.
+                        <?php echo $jobdesc['AboutJob']; ?>
                         </p>
                     </div>
                     <div class="btn">

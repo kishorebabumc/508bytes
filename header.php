@@ -1,8 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
-
 <html lang="en">
 
 <head>
@@ -21,8 +16,12 @@ Author URL: http://w3layouts.com
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicons/favicon.ico">
-     <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDklUmd7kj2m0jCzh5KC0Btz4hr4ZyXi-s&callback=console.debug&libraries=maps,marker&v=beta">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDklUmd7kj2m0jCzh5KC0Btz4hr4ZyXi-s&callback=console.debug&libraries=maps,marker&v=beta">
     </script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    
 </head>
 
 <body>
@@ -64,9 +63,15 @@ Author URL: http://w3layouts.com
                             <a class="nav-link" href="career.php">Career</a>
                         </li>
                         <!-- search button -->
-                        <li class="nav-item">
-                            <a class="nav-link"></a>
-                        </li>
+                        <?php                                                        
+                            if(isset($_SESSION['FirstName'])){
+                                echo '<li class="nav-item" ><a class="nav-link" >'.$_SESSION['FirstName'].'</a></li>';
+                            } 
+                            else{
+                                echo '<li class="nav-item" ><a class="nav-link" href="login.php">Login</a></li>';    
+                            }
+                        ?>
+                        
                         <!-- //search button -->
                     </ul>
                 </div>

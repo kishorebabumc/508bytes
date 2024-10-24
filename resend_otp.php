@@ -3,22 +3,22 @@ include("config.php");
 
 
 $email = $_POST["email"];
-$firstname = $_POST["firstName"];
-$lastname = $_POST["lastname"];
-$mobileno = $_POST["mobileNo"];
-$password =  $_POST["password"];
 $otp = random_int(100000, 999999);
 
-
-
-
-
-$query = "INSERT INTO applicants (email, firstName, lastName, mobileNo, `password`, otp) VALUES ('$email', '$firstname', '$lastname', '$mobileno', '$password', '$otp')";
+$query = "UPDATE applicants SET otp = '$otp' WHERE email =  '$email'";
 $res = mysqli_query($connection, $query);
 echo mysqli_error($connection);
+
+$query1 = "SELECT * FROM applicants WHERE email =  '$email'";
+$res1 = mysqli_query($connection, $query1);
+$data = mysqli_fetch_assoc($res1);
+echo mysqli_error($connection);
+
+$firstname = $data['firstname'];
+$lastname = $data['lastname'];
+
 if ($query) {
     echo "successfully inserted data";
-
     
     $subject = "508 Bytes One Time Password for eMail verification";
     $message = "<p>Dear Sir/Madam,<p> <p>".$firstname." ".$lastname.",</p>"."<p>This mail is in reference to the registration in 508 Bytes Career.
