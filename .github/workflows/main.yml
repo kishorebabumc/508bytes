@@ -1,0 +1,43 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Initiate CodeDeploy
+        run: pwd
+
+      # Runs a set of commands using the runners shell
+      - name: Deploy the code using Codedeploy
+        run: |
+          aws configure set aws_access_key_id ${{secrets.AWS_ACCESS_KEY_ID}}; aws configure set aws_secret_access_key ${{secrets.AWS_SECRET_ACCESS_KEY}}; aws configure set default.region ap-south-1
+          echo "pushing the code to s3"
+          aws deploy push --application-name 508bytes --description "508BYTES_$(date +%F)" --ignore-hidden-files --s3-location s3://508bytes-site/508bytes.zip --source $GITHUB_WORKSPACE > $GITHUB_WORKSPACE/etag
+          etag=`cat $GITHUB_WORKSPACE/etag |awk -F 'eTag=' '{print $2}'|awk -F ',' '{print $1}'|tr -d '"'|tail -1`
+          echo $etag
+          #Code deploy
+          echo "Initiating deploy"
+          aws deploy create-deployment --application-name 508bytes --s3-location bucket=508bytes-site,key=508bytes.zip,bundleType=zip,eTag=$etag --deployment-group-name 508bytes --deployment-config-name CodeDeployDefault.OneAtATime --description 508bytes_$(date +%F)
+      #    echo Add other actions to build,
+      #    echo test, and deploy your project.
