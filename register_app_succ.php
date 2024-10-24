@@ -21,7 +21,12 @@ if ($query) {
     $subject = "508 Bytes One Time Password for eMail verification";
     $message = "<p>Dear Sir/Madam,<p> <p>".$firstname." ".$lastname.",</p>"."<p>This mail is in reference to the registration in 508 Bytes Career.
     Your One Time Password (OTP) for e-Mail Verification is".$otp." </p><p>This is a system generated mail.</p><p>Regards,</p><p>Team 508Bytes</p>";
-    $headers = "From: support@508bytes.com";
+    // Email headers to specify HTML content
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+    // Additional headers
+    $headers .= 'From: support@508bytes.com' . "\r\n";
 
     // Send email
     if (mail($email, $subject, $message, $headers)) {

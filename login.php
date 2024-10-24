@@ -21,8 +21,9 @@ include("header.php");
         justify-content: center;
         align-items: center;
         padding-top: 50px;
-        padding-bottom: 100px;        
+        padding-bottom: 100px;
     }
+
     .all-content {
         border: 1px solid #EA6E23;
         border-radius: 10px;
@@ -32,30 +33,42 @@ include("header.php");
         justify-content: center;
         align-items: center;
     }
+
     .user-input {
         padding: 10px;
     }
+
     .login {
         display: flex;
         justify-content: center;
         padding-top: 30px;
         outline: none;
     }
+
     .mail-input input {
         width: 300px;
         border-radius: 10px;
         padding: 5px;
         outline: none;
     }
+
     .pass-input input {
         width: 300px;
         border-radius: 10px;
         padding: 5px;
         outline: none;
     }
+
     .password-input {
         padding-top: 10px;
         padding-left: 10px;
+    }
+
+    .rem-forgott {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+
     }
 </style>
 <div class="set">
@@ -63,7 +76,7 @@ include("header.php");
         <form>
             <div class="user-input">
                 <div class="user">
-                    <label  style="color:#EA6E23">UserName<label>
+                    <label style="color:#EA6E23">UserName<label>
                 </div>
                 <div class="mail-input">
                     <input type="email" name="email">
@@ -75,12 +88,19 @@ include("header.php");
                 </div>
 
                 <div class="pass-input">
-                    <input type="text"   name="password" id="pass">
+                    <input type="text" name="password" id="pass">
                 </div>
             </div>
+            <div class="rem-forgott">
                 <div>
-                    <input type="">
+                
+                    <input type="checkbox" style="display: block;"/>
+                    <span>Remember Me</span>
                 </div>
+                <div>
+                    <a href="#"><span>Forgott Password?</span></a>
+                </div>
+            </div>
             <div class="login"><button type="button" class="btn button-style">Login</button></div>
         </form>
     </div>

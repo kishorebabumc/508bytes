@@ -61,7 +61,7 @@ include("header.php");
                     <div>
 
                         <h4 style="float:left;">Trainee Developer</h4>
-                        <p class="job-description" style="text-align:left; margin-left:20px; background-color:#E5F3FE;">Trainee Developer is not a full-time permanent opportunity, the training program is 12 months in duration.<strong>After 6 months the selected trainees paid monthly remuneration, thereafter 6 months and after completion of training the selected trainees are reviewed and taken as full time employee to the organization and fixed scales as per the norms.</strong> Recent graduates and also work experience in other industries may apply. Please complete your application before Oct 26, 2024, 11 PM IST.</p>
+                        <p class="job-description" style="text-align:left; margin-left:20px; background-color:#EA6E23; color:whitesmoke;">Trainee Developer is not a full-time permanent opportunity, the training program is 12 months in duration.<strong>After 6 months the selected trainees paid monthly remuneration, thereafter 6 months and after completion of training the selected trainees are reviewed and taken as full time employee to the organization and fixed scales as per the norms.</strong> Recent graduates and also work experience in other industries may apply. Please complete your application before Oct 26, 2024, 11 PM IST.</p>
                     </div>
                     <div>
                         <h5>Minimum qualifications:</h5>
