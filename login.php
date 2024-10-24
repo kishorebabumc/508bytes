@@ -39,44 +39,52 @@ include("header.php");
         padding: 10px;
     }
 
-    .password {
+    .password-input {
         padding-top: 10px;
+        padding-left:10px;
     }
-    .login{
-        padding-top: 20px;
-    }
-    .mail-input input{
-        width:300px;
-        border-radius: 10px;
-        padding:5px;
-        background-color: red;
+
+    .login {
+        display:flex;
+        justify-content: center;
+        padding-top: 30px;
         outline: none;
     }
-    .pass-input input{
-        width:300px;
+
+    .mail-input input {
+        width: 300px;
         border-radius: 10px;
-        padding:5px;
-        background-color: red;
+        padding: 5px;
+        outline: none;
+    }
+
+    .pass-input input {
+        width: 300px;
+        border-radius: 10px;
+        padding: 5px;
         outline: none;
 
     }
 </style>
 <div class="set">
     <div class="all-content">
-        <div class="user-input">
-            <div class="user">
-                <label>UserName<label>
-            </div>
-            <div class="mail-input">
-                <input type="mail">
-            </div>
-        </div>
-        <div>
-            <div class="password"><label class="pass">Password</label></div>
+        <form>
+            <div class="user-input">
 
-            <div class="pass-input"><input type="text"></div>
-        </div>
-        <div class="login"><button type="button" class="btn button-style">Login</button></div>
+                <div class="user">
+                    <label>UserName<label>
+                </div>
+                <div class="mail-input">
+                    <input type="email" name="email">
+                </div>
+            </div>
+            <div class="password-input"> 
+                <div class="password"><label class="pass" name="password" id="pass">Password</label></div>
+
+                <div class="pass-input"><input type="text"></div>
+            </div>
+            <div class="login"><button type="button" class="btn button-style">Login</button></div>
+        </form>
     </div>
 </div>
 <?php
