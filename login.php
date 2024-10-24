@@ -20,69 +20,67 @@ include("header.php");
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        /* background-color: red; */
-        padding-top: 100px;
-        padding-bottom: 100px;
-        border: 1px solid black;
+        padding-top: 50px;
+        padding-bottom: 100px;        
     }
-
     .all-content {
-        border: 1px solid black;
-        padding: 50px;
+        border: 1px solid #EA6E23;
+        border-radius: 10px;
+        padding: 40px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
-
     .user-input {
         padding: 10px;
     }
-
-    .password-input {
-        padding-top: 10px;
-        padding-left:10px;
-    }
-
     .login {
-        display:flex;
+        display: flex;
         justify-content: center;
         padding-top: 30px;
         outline: none;
     }
-
     .mail-input input {
         width: 300px;
         border-radius: 10px;
         padding: 5px;
         outline: none;
     }
-
     .pass-input input {
         width: 300px;
         border-radius: 10px;
         padding: 5px;
         outline: none;
-
+    }
+    .password-input {
+        padding-top: 10px;
+        padding-left: 10px;
     }
 </style>
 <div class="set">
     <div class="all-content">
         <form>
             <div class="user-input">
-
                 <div class="user">
-                    <label>UserName<label>
+                    <label  style="color:#EA6E23">UserName<label>
                 </div>
                 <div class="mail-input">
                     <input type="email" name="email">
                 </div>
             </div>
-            <div class="password-input"> 
-                <div class="password"><label class="pass" name="password" id="pass">Password</label></div>
+            <div class="password-input">
+                <div class="password">
+                    <label class="pass" style="color:#EA6E23">Password</label>
+                </div>
 
-                <div class="pass-input"><input type="text"></div>
+                <div class="pass-input">
+                    <input type="text"   name="password" id="pass">
+                </div>
             </div>
+                <div>
+                    <input type="">
+                </div>
             <div class="login"><button type="button" class="btn button-style">Login</button></div>
         </form>
     </div>
