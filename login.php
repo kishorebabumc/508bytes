@@ -1,20 +1,24 @@
 <?php
 include('session.php');
+include("config.php");
+
 $_SESSION['Page'] = 'login';
-include("header.php");
 if($_SERVER['REQUEST_METHOD'] == "POST"){
     $email = $_POST['email'];
     $password = $_POST['password'];
     $query = mysqli_query($connection, "SELECT * FROM `applicants` WHERE BINARY email = '$email' AND BINARY password = '$password' AND verified = 1");
     if(mysqli_num_rows($query) > 0){
         $data = mysqli_fetch_assoc($query);
-        $_SESSION['FirmName'] = $data['firstName'];
+        $_SESSION['Email'] = $data['email'];
+        $_SESSION['FirstName'] = $data['firstName'];
         $_SESSION['LastName'] = $data['lastName'];
-        echo $_SESSION['FirmName'];
+        header("location: career.php");
+        // echo $_SESSION['FirstName'];
     }else{
         echo "User Name or Password is incorrect";
     }
 }
+include("header.php");
 ?>
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
@@ -63,7 +67,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     .mail-input input {
         width: 300px;
         border-radius: 10px;
-        padding: 4px;
+        padding: 4px  15px;
         outline: none;
         border: 1px solid #EA6E23;
     }
@@ -71,7 +75,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     .pass-input input {
         width: 300px;
         border-radius: 10px;
-        padding: 4px;
+        padding: 4px  15px;
         outline: none;
         border: 1px solid #EA6E23;
     }
@@ -93,7 +97,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         <form action="#" method="post">
             <div class="user-input">
                 <div class="user">
-                    <label style="color:white">UserName<label>
+                    <label style="color:white">User Name<label>
                 </div>
                 <div class="mail-input">
                     <input type="email" name="email" autocomplete="off">
@@ -118,6 +122,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 </div>
             </div> -->
             <div class="login"><button type="submit" class="btn button-style">Login</button></div>
+            <p style="color:white"> If, not registered, please <a href='register_app.php'>click here</a> to register </p>
         </form>
     </div>
 </div>

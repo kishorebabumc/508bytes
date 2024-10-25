@@ -1,3 +1,7 @@
+<?php
+    include('session.php');
+    
+?>
 <html lang="en">
 
 <head>
@@ -44,6 +48,48 @@
                     <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
                     <span class="navbar-toggler-icon fa icon-close fa-times"></span>
                 </button>
+                <style>
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 10px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px sol;
+}
+
+.dropdown-content a:hover {
+    /* background-color: black; */
+    color: #EA6E23;
+    text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
 
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <ul class="navbar-nav ml-lg-auto">
@@ -65,7 +111,16 @@
                         <!-- search button -->
                         <?php                                                        
                             if(isset($_SESSION['FirstName'])){
-                                echo '<li class="nav-item" ><a class="nav-link" >'.$_SESSION['FirstName'].'</a></li>';
+                                echo '<li class="nav-item" >
+                                <div class="dropdown">
+                                    <a class="nav-link" >'.$_SESSION['FirstName'].' '.$_SESSION['LastName'].'</a>
+                                    <div class="dropdown-content">
+                                        <a href="profile.php">Profile</a>
+                                        <a href="logout.php">Logout</a>
+                                    </div>
+                                </div>
+                                
+                                </li>';
                             } 
                             else{
                                 echo '<li class="nav-item" ><a class="nav-link" href="login.php">Login</a></li>';    

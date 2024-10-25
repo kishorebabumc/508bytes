@@ -232,7 +232,7 @@ include('header.php');
                             <span class="fas fa-business-time icon-color" aria-hidden="true"></span>
                         </div>
                         <h5><a href="contact.php">1. Planning & Research</a></h5>
-                        <p>The purpose of research is to discover answers to questions through its application in a business model, to gain familiarity with a phenomenon, or to achieve new insights into it.</p>
+                        <p style="text-align:left;">The purpose of research is to discover answers to questions through its application in a business model, to gain familiarity with a phenomenon, or to achieve new insights into it.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mt-md-0 mt-2">
@@ -241,7 +241,7 @@ include('header.php');
                             <span class="fas fa-laptop-code icon-color" aria-hidden="true"></span>
                         </div>
                         <h5><a href="contact.php">2. Optimizing</a></h5>
-                        <p>Effective business process management (BPM) requires a well-thought-out plan that addresses the ongoing needs for process definition, execution, evaluation, and iteration. At its core is business process improvement and optimization—an operational practice focused on identifying, evaluating, and resolving business process issues and challenges.</p>
+                        <p style="text-align:left;">Effective business process management (BPM) requires a well-thought-out plan that addresses the ongoing needs for process definition, execution, evaluation, and iteration. At its core is business process improvement and optimization—an operational practice focused on identifying, evaluating, and resolving business process issues and challenges.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mt-lg-0 mt-2">
@@ -250,7 +250,7 @@ include('header.php');
                             <span class="fas fa-clipboard-check icon-color" aria-hidden="true"></span>
                         </div>
                         <h5><a href="contact.php">3. Result</a></h5>
-                        <p>Finally, we develop customer-friendly web and mobile applications based on various business models, tailored to meet customer needs.</p>
+                        <p style="text-align:left;">Finally, we develop customer-friendly web and mobile applications based on various business models, tailored to meet customer needs.</p>
                     </div>
                 </div>
             </div>

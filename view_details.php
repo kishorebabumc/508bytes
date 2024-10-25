@@ -1,6 +1,7 @@
 <?php
 include('session.php');
 $_SESSION['Page'] = 'career';
+include("config.php");
 include("header.php");
 if(isset($_GET['jobid'])){
     $jodid = $_GET['jobid'];
@@ -10,7 +11,12 @@ if(isset($_GET['jobid'])){
     $jobdesc = mysqli_fetch_assoc($jobdescquery);
     $jobminqua = mysqli_query($connection,"SELECT * FROM `JobMinQua` WHERE JobID = '$jodid'");
     $jobprefqua = mysqli_query($connection,"SELECT * FROM `JobPreQua` WHERE JobID = '$jodid'");
-
+    $Count = 0;
+    if(isset($_SESSION['Email'])){
+        $email = $_SESSION['Email'];
+        $Applied = mysqli_query($connection,"SELECT * FROM `job_applied` WHERE JobID = '$jodid' AND email = '$email'");
+        $Count = mysqli_num_rows($Applied);
+    }
 }
 ?>
 <div class="inner-banner">
@@ -101,14 +107,36 @@ if(isset($_GET['jobid'])){
                         <?php echo $jobdesc['AboutJob']; ?>
                         </p>
                     </div>
-                    <div class="btn">
-                        <a href="login.php">
-                            <button type="button" class="btn button-style" id="disable">Apply Now</button>
+                    <?php
+                        if(isset($_SESSION['FirstName'])){
+                    ?>
+                    <div class="btn" id="ApplyBtn">
+                        
+                        <?php if($Count > 0 ){
+                            echo "<p class='text-danger'>You are already applied, please check your profile for status</p>";
+                        }else{?>
+                            <button type="button" onclick="ApplyNow('<?php echo $_GET['jobid'];?>')" class="btn button-style" id="disable">Apply Now</button>
+                        <?php } ?>
+                        <!-- </a> -->
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        if(!isset($_SESSION['FirstName'])){
+                    ?>
+                    <div>
+                        <a href="register_app.php">
+                            <button type="button" class="btn button-style" id="disable">Register Now</button>                            
                         </a>
                     </div>
                     <div>
-                        <p class="hove" onclick="window.location.href='register_app.php'">Register Now</p>
+                        <p>If, already registered, please <a href='login.php'> click here </a> to login </p>                            
+                        </a>
                     </div>
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
         </div>
@@ -119,6 +147,22 @@ if(isset($_GET['jobid'])){
 <?php
 include("footer.php");
 ?>
+<script>
+function ApplyNow(JobID){
+    if(JobID){
+        $.ajax({
+            url: "apply_now.php",
+            method: 'POST',
+            data: {JobID},
+            success: function(res){
+                $("#ApplyBtn").text(res);
+            }
+        })
+    }else{
+        alert("No Job ID");
+    }
+}
+</script>
 <!-- <script>
 function enable(){
     const d = new Date(); // 2024-10-27T23:00:00

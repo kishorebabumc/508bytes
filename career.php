@@ -1,6 +1,7 @@
 <?php
 include('session.php');
 $_SESSION['Page'] = 'career';
+include("config.php");
 include("header.php");
 $job = mysqli_query($connection,"SELECT * FROM `jobs` WHERE Status = 1 ");
 $count = mysqli_num_rows($job);
@@ -16,11 +17,17 @@ $count = mysqli_num_rows($job);
                 <li class="active"><span class="fa fa-chevron-right mx-2" aria-hidden="true"></span> Career</li>
             </ul>
         </div>
+        <?php
+        if(!isset($_SESSION['FirstName'])){
+        ?>
         <div class="btn">
             <a href="register_app.php">
                 <button type="button" class="btn button-style" id="disable">Register Now</button>
             </a>
         </div>
+        <?php
+        }
+        ?>
     </section>
 </div>
 <!-- //inner banner -->

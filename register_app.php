@@ -1,12 +1,12 @@
 <?php
-include('session.php');
+
 $_SESSION['Page'] = 'career';
 include("header.php");
 ?>
 
 <style>
     #snackbar {
-        visibility: hidden;
+        visibility: visible;
         min-width: 250px;
         margin-left: -125px;
         background-color: #333;
@@ -116,13 +116,13 @@ include("header.php");
                         <div class="form-group row">
                             <label for="MobileNo" class="col-sm-4 col-form-label">Mobile No.</label>
                             <div class="col-sm-6">
-                                <input type="text" name="mobileNo" minlength="10" maxlength="10" class="form-control" id="MobileNo" placeholder="Mobile Number"  autocomplete="off" required>
+                                <input type="tel" name="mobileNo" minlength="10" maxlength="10" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" class="form-control" id="MobileNo" placeholder="Mobile Number"  autocomplete="off" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="inputeMail" class="col-sm-4 col-form-label">Email</label>
                             <div class="col-sm-6">
-                                <input type="text" name="email" class="form-control" id="inputeMail" placeholder="e-Mail"  autocomplete="off" required>
+                                <input type="email" name="email" class="form-control" id="inputeMail" placeholder="e-Mail"  autocomplete="off" required>
                             </div>
                             <div class="col-sm-2" id="VerifyDiv">
                                 <button onclick="Verify()" class="btn btn-success">Verify</button>
@@ -140,9 +140,10 @@ include("header.php");
                                 <p class="text-danger" id="ErrorMessage"></p>
                             </div>
                         </div>
-
-                        <button id="submit_btn" type="submit" class="btn button-style" onclick="">Register</button>
-                        <div id="snackbar">Some text some message..</div>
+                        <div style="float:left;">
+                            <button id="submit_btn" type="submit" class="btn button-style" onclick="">Register</button>
+                            <div id="snackbar1">Already Registered, <a href='login.php'>click here</a> to login</div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -151,42 +152,9 @@ include("header.php");
 </section>
 
 <script>
-    // function myFunction() {
-    //     var x = document.getElementById("snackbar");
-    //     x.className = "show";
-    //     setTimeout(function() {
-    //         x.className = x.className.replace("show", "");
-    //     }, 3000);
-    // }
+    
 
-
-    $("#VerifyDiv").hide();
-    // $("#reg-form").submit((e)=>{
-    //     $("#VerifyDiv").hide();
-    //     e.preventDefault();
-    //     var mail = $("#inputeMail").val();
-
-    //     if(mail){
-            // $.ajax({
-            //     url : "register_email_ajax.php",
-            //     type : "POST",
-            //     data : {mail},
-            //     success: function(res) {
-            //         // console.log(res.length);
-            //         if(res?.verified == 0){
-            //             $("#submit_btn").prop('disabled', true)
-            //             $("#ErrorMessage").text("Verification Pending");
-            //             $("#VerifyDiv").show();
-            //         }else if(res?.verified == 1){
-            //             $("#submit_btn").prop('disabled', true)
-            //             $("#ErrorMessage").text("Already Registered")
-            //         }else{
-            //             $("#submit_btn").prop('disabled', false)
-            //         }
-            //     }
-            // });
-    //     }
-    // });
+    $("#VerifyDiv").hide();    
 
     function Verify(){
         var email = $("#inputeMail").val();
@@ -209,11 +177,14 @@ include("header.php");
                             $("#submit_btn").prop('disabled', true);
                         }
                         else{
+                            $("#VerifyDiv").hide(); 
                             $("#ErrorMessage").text("Already Registered, Please login using Mail ID")
                             $("#submit_btn").prop('disabled', true);
                         }
+                    }else{
+                        $("#VerifyDiv").hide(); 
                     }
-                        console.log(data[0]);
+                    console.log(data[0]);
                 }
             });
         

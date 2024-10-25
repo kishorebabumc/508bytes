@@ -1,6 +1,5 @@
 <?php
 include("config.php");
-include("header.php");
 
 
 $email = $_GET["email"];
@@ -22,6 +21,8 @@ if($dataCount == 0){
     header("location: register_app.php");
 }
 echo mysqli_error($connection);
+include("header.php");
+
 // if ($query) {
 //     echo "successfully inserted data";
 
@@ -67,7 +68,7 @@ echo mysqli_error($connection);
         </div>
         <div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
             <div class="row contact-block">
-                <p class="mt-md-0 mb-4">To Complete the Registration process please verify your e-Mail by using OTP sent to registered mail address, if you are not received e-Mail, please check spam / junk folder.</p>
+                <p class="mt-md-0 mb-4">To Complete the Registration process please verify your e-Mail by using OTP sent to registered mail address, if you are not received e-Mail, please check spam / junk folder. Still not received please drop a mail to support@508bytes.com</p>
                 <div class="col-md-7 mt-md-0 mt-4">
                     <form method="POST" action="verify_otp_suc.php">
                         <div class="form-group row">
