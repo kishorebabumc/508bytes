@@ -15,7 +15,7 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT applicants.email, applicants.mobileNo, applicants.firstName, applicants.lastName, Address, City, State, job_applied.email AS AppliedEmail, personal_info.email PersnalInfo  FROM applicants LEFT JOIN job_applied ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description LEFT JOIN personal_info ON personal_info.email = job_applied.email;";
+$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1";
 $jres = mysqli_query($connection, $japp);
 
 
@@ -127,12 +127,12 @@ $jres = mysqli_query($connection, $japp);
                                         $i++;  ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $render['firstName']; ?></td>
+                                            <td><?php echo $render['firstName']." ".$render['lastName']; ?></td>
                                             <td><?php echo $render['email']; ?></td>
                                             <td><?php echo $render['mobileNo']; ?></td>
                                             <td><?php echo $render['Address'] . ", " . $render['City']; ?></td>
-                                            <td><?php echo isset($render['AppliedEmail']) ? "Yes" : ""; ?></td>
-                                            <td><?php echo isset($render['PersnalInfo']) ? "Yes" : "";; ?></td>
+                                            <td><?php echo isset($render['profileup']) ? "Yes" : ""; ?></td>
+                                            <td><?php echo isset($render['applied']) ? "Yes" : "";; ?></td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
