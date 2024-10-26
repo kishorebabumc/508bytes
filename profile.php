@@ -15,7 +15,7 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT * FROM job_applied LEFT JOIN applicants ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description ";
+$japp = "SELECT *, job_applied.email FROM job_applied LEFT JOIN applicants ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description LEFT JOIN personal_info ON personal_info.email = job_applied.email ";
 $jres = mysqli_query($connection, $japp);
 
 
@@ -73,7 +73,7 @@ $jres = mysqli_query($connection, $japp);
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
         <div class="container">
-            <h4 class="inner-text-title font-weight-bold mb-2">Profile Details</h4>
+            <h4 class="inner-text-title font-weight-bold mb-2"><?php if ($ret['isAdmin'] == 1) { ?>Applicants Details <?php }else { ?>Profile Details <?php } ?></h4>
         </div>
     </section>
 </div>
@@ -111,6 +111,9 @@ $jres = mysqli_query($connection, $japp);
                                 <tr>
                                     <th scope="col">SI NO</th>
                                     <th scope="col">Name Of The Applicant</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Address</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,6 +124,9 @@ $jres = mysqli_query($connection, $japp);
                                 <tr>
                                     <td><?php echo $i ; ?></td>
                                     <td><?php echo $render['firstName']  ; ?></td>
+                                    <td><?php echo $render['email']  ; ?></td>
+                                    <td><?php echo $render['mobileNo']  ; ?></td>
+                                    <td><?php echo $render['Address'] . ", ". $render['City'] . ", ". $render['State']  ; ?></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
