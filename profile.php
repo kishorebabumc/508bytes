@@ -15,7 +15,7 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT *, applicants.email, applicants.mobileNo FROM applicants LEFT JOIN job_applied ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description LEFT JOIN personal_info ON personal_info.email = job_applied.email;";
+$japp = "SELECT applicants.email, applicants.mobileNo, applicants.firstName, applicants.lastName, Address, City, State, job_applied.email AS AppliedEmail, personal_info.email PersnalInfo  FROM applicants LEFT JOIN job_applied ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description LEFT JOIN personal_info ON personal_info.email = job_applied.email;";
 $jres = mysqli_query($connection, $japp);
 
 
@@ -114,6 +114,8 @@ $jres = mysqli_query($connection, $japp);
                                     <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
                                     <th scope="col">Address</th>
+                                    <th scope="col">Applied</th>
+                                    <th scope="col">Persnol Info</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,6 +129,8 @@ $jres = mysqli_query($connection, $japp);
                                     <td><?php echo $render['email']  ; ?></td>
                                     <td><?php echo $render['mobileNo']  ; ?></td>
                                     <td><?php echo $render['Address'] . ", ". $render['City'] . ", ". $render['State']  ; ?></td>
+                                    <td><?php echo $render['AppliedEmail']  ; ?></td>
+                                    <td><?php echo $render['PersnalInfo']  ; ?></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
