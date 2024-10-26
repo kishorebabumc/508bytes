@@ -120,6 +120,16 @@ include("header.php");
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="MobileNo" class="col-sm-4 col-form-label">Gender</label>
+                            <div class="col-sm-6">
+                                <select  class="form-control" name="Gender" required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="inputeMail" class="col-sm-4 col-form-label">Email</label>
                             <div class="col-sm-6">
                                 <input type="email" name="email" class="form-control" id="inputeMail" placeholder="e-Mail"  autocomplete="off" required>

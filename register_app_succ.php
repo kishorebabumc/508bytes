@@ -5,6 +5,7 @@ include("config.php");
 $email = $_POST["email"];
 $firstname = $_POST["firstName"];
 $lastname = $_POST["lastname"];
+$gender = $_POST["Gender"];
 $mobileno = $_POST["mobileNo"];
 $password =  $_POST["password"];
 $otp = random_int(100000, 999999);
@@ -13,7 +14,8 @@ $otp = random_int(100000, 999999);
 
 
 
-$query = "INSERT INTO applicants (email, firstName, lastName, mobileNo, `password`, otp) VALUES ('$email', '$firstname', '$lastname', '$mobileno', '$password', '$otp')";
+
+$query = "INSERT INTO applicants (email, firstName, lastName,gender, mobileNo, `password`, otp) VALUES ('$email', '$firstname', '$lastname','$gender', '$mobileno', '$password', '$otp')";
 $res = mysqli_query($connection, $query);
 echo mysqli_error($connection);
 if ($query) {
