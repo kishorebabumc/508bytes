@@ -129,8 +129,8 @@ $jres = mysqli_query($connection, $japp);
                                     <td><?php echo $render['email']  ; ?></td>
                                     <td><?php echo $render['mobileNo']  ; ?></td>
                                     <td><?php echo $render['Address'] . ", ". $render['City'] . ", ". $render['State']  ; ?></td>
-                                    <td><?php echo $render['AppliedEmail']  ; ?></td>
-                                    <td><?php echo $render['PersnalInfo']  ; ?></td>
+                                    <td><?php echo isset($render['AppliedEmail']) ? "Yes" : ""  ; ?></td>
+                                    <td><?php echo isset($render['PersnalInfo']) ? "Yes" : ""  ;  ; ?></td>
                                 </tr>
                                 <?php } ?>
                             </tbody>
