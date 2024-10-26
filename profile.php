@@ -1,6 +1,6 @@
 <?php
 include('session.php');
-if(!isset($_SESSION['Email'])){
+if (!isset($_SESSION['Email'])) {
     header("location: career.php");
 }
 include("header.php");
@@ -73,7 +73,13 @@ $jres = mysqli_query($connection, $japp);
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
         <div class="container">
-            <h4 class="inner-text-title font-weight-bold mb-2"><?php if ($ret['isAdmin'] == 1) { ?>Applicants Details <?php }else { ?>Profile Details <?php } ?></h4>
+            <h4 class="inner-text-title font-weight-bold mb-2"><?php if ($ret['isAdmin'] == 1) { ?>Applicants Details <?php } else { ?>Profile Details <?php } ?></h4>
+            <div class="profile-img d-flex justify-content-center pb-5 mt-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                </svg>
+            </div>
         </div>
     </section>
 </div>
@@ -86,59 +92,127 @@ $jres = mysqli_query($connection, $japp);
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
+    <?php if ($ret['isAdmin'] == 1) { ?>
+        <section id="tabs" class="project-tab">
+            <div class="container">
 
-    <section id="tabs" class="project-tab">
-        <div class="container">
-            <?php if ($ret['isAdmin'] == 1) { ?>
-                <div class="row">
-                    <div class="col-md-3 ">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All Applicants</a>
+                            <a class="nav-item nav-link" id="stage-2-tab" data-toggle="tab" href="#stage-2" role="tab" aria-controls="stage-2" aria-selected="false">Stage - 2</a>
+                            <a class="nav-item nav-link" id="stage-3-tab" data-toggle="tab" href="#stage-3" role="tab" aria-controls="stage-3" aria-selected="false">Stage - 3</a>
+                            <a class="nav-item nav-link" id="stage-4-tab" data-toggle="tab" href="#stage-4" role="tab" aria-controls="stage-4" aria-selected="false">Stage - 4</a>
+                            <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Others</a> -->
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <table class="table  mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">SI NO</th>
+                                        <th scope="col">Name Of The Applicant</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Applied</th>
+                                        <th scope="col">Persnol Info</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $i = 0;
+                                    while ($render = mysqli_fetch_assoc($jres)) {
+                                        $i++;  ?>
+                                        <tr>
+                                            <td><?php echo $i; ?></td>
+                                            <td><?php echo $render['firstName']; ?></td>
+                                            <td><?php echo $render['email']; ?></td>
+                                            <td><?php echo $render['mobileNo']; ?></td>
+                                            <td><?php echo $render['Address'] . ", " . $render['City']; ?></td>
+                                            <td><?php echo isset($render['AppliedEmail']) ? "Yes" : ""; ?></td>
+                                            <td><?php echo isset($render['PersnalInfo']) ? "Yes" : "";; ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="stage-2" role="tabpanel" aria-labelledby="stage-2-tab">
+                            <table class="table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="p-10">Id</th>
+                                        <th>Applied job</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                        <?php while ($drop = mysqli_fetch_assoc($resjob)) {
-                        ?>
-                            <div class="card ms-3 me-3 mt-3 p-3">
-                                <span><?php echo $drop['Description']; ?></span>
-                            </div>
+                                    <?php
 
-
-                        <?php } ?>
-
-                        </ul>
+                                    while ($rete = mysqli_fetch_assoc($exec)) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $rete['JobID']; ?></td>
+                                            <td><?php echo $rete['Description']; ?></td>
+                                            <td>Active</td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="stage-3" role="tabpanel" aria-labelledby="stage-3-tab">
+                            <table class="table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Contest Name</th>
+                                        <th>Date</th>
+                                        <th>Award Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="#">Work 1</a></td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#">Work 2</a></td>
+                                        <td>Moe</td>
+                                        <td>mary@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="#">Work 3</a></td>
+                                        <td>Dooley</td>
+                                        <td>july@example.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
-                    <div class="col-md-9">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">SI NO</th>
-                                    <th scope="col">Name Of The Applicant</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Phone</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Applied</th>
-                                    <th scope="col">Persnol Info</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php 
-                            $i = 0;
-                            while($render = mysqli_fetch_assoc($jres)) {
-                                $i++;  ?>
-                                <tr>
-                                    <td><?php echo $i ; ?></td>
-                                    <td><?php echo $render['firstName']  ; ?></td>
-                                    <td><?php echo $render['email']  ; ?></td>
-                                    <td><?php echo $render['mobileNo']  ; ?></td>
-                                    <td><?php echo $render['Address'] . ", ". $render['City'] . ", ". $render['State']  ; ?></td>
-                                    <td><?php echo isset($render['AppliedEmail']) ? "Yes" : ""  ; ?></td>
-                                    <td><?php echo isset($render['PersnalInfo']) ? "Yes" : ""  ;  ; ?></td>
-                                </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-
                 </div>
-            <?php } else { ?>
+            </div>
+        </section>
+        <!-- <div class="row">
+            <div class="col-md-2 ">
+                <?php while ($drop = mysqli_fetch_assoc($resjob)) { ?>
+                    <div class="card ms-3 me-3 mt-3 p-3">
+                        <span><?php echo $drop['Description']; ?></span>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <div class="col-md-10">
+                
+            </div>
+
+        </div> -->
+    <?php } else { ?>
+
+        <section id="tabs" class="project-tab">
+            <div class="container">
+
                 <div class="col-md-12">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -149,12 +223,12 @@ $jres = mysqli_query($connection, $japp);
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="profile-img d-flex justify-content-center pb-5 mt-4">
+                            <!-- <div class="profile-img d-flex justify-content-center pb-5 mt-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                                 </svg>
-                            </div>
+                            </div> -->
                             <div class="form-group row">
                                 <label class="col-sm-2"></label>
                                 <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
@@ -304,9 +378,9 @@ $jres = mysqli_query($connection, $japp);
                         </div>
                     </div>
                 </div>
-            <?php } ?>
-        </div>
-    </section>
+            </div>
+        </section>
+    <?php } ?>
 
 
 </div>

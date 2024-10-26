@@ -101,14 +101,14 @@ include("header.php");
                             <label class="col-sm-2"></label>
                             <label for="inputPassword" class="col-sm-2 col-form-label">Date Of Birth</label>
                             <div class="col-sm-3">
-                                <input type="date" name="DateOfBirth" value="<?php echo $info['DateOfBirth']; ?>" class="form-control">
+                                <input type="date" name="DateOfBirth" value="<?php echo $info['DateOfBirth']; ?>" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2"></label>
                             <label for="inputPassword" class="col-sm-2 col-form-label">Skills</label>
                             <div class="col-sm-6">
-                                <textarea class="form-control" name="Skills" id="" cols="30" rows="3" placeholder="Type a skill"><?php echo $info['Skills']; ?></textarea>
+                                <textarea class="form-control" name="Skills" id="" cols="30" rows="3" placeholder="Type a skill" required><?php echo $info['Skills']; ?></textarea>
                                 <!-- <input type="text" id="skillInput"  /> -->
                             </div>
                         </div>
@@ -116,28 +116,28 @@ include("header.php");
                             <label class="col-sm-2"></label>
                             <label for="inputPassword" class="col-sm-2 col-form-label">Languages</label>
                             <div class="col-sm-6">
-                                <input type="text" id="skillInput" name="Languages" class="form-control" placeholder="Type Known Languages" value="<?php echo $info['Languages']; ?>" />
+                                <input type="text" id="skillInput" name="Languages" class="form-control" placeholder="Type Known Languages" value="<?php echo $info['Languages']; ?>" required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2"></label>
                             <label for="Address" class="col-sm-2 col-form-label">Address</label>
                             <div class="col-sm-6">
-                                <input type="text" id="Address" class="form-control" name="Address" placeholder="Enter Your Address" value="<?php echo $info['Address']; ?>" />
+                                <input type="text" id="Address" class="form-control" name="Address" placeholder="Enter Your Address" value="<?php echo $info['Address']; ?>" required/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2"></label>
                             <label for="City" class="col-sm-2 col-form-label">City</label>
                             <div class="col-sm-6">
-                                <input type="text" id="City" name="City" class="form-control" placeholder="Enter City " value="<?php echo $info['City']; ?>" />
+                                <input type="text" id="City" name="City" class="form-control" placeholder="Enter City " value="<?php echo $info['City']; ?>" required />
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2"></label>
                             <label for="State" class="col-sm-2 col-form-label">State</label>
                             <div class="col-sm-6">
-                                <input type="text" id="State" name="State" class="form-control" placeholder="Enter State" value="<?php echo $info['State']; ?>" />
+                                <input type="text" id="State" name="State" class="form-control" placeholder="Enter State" value="<?php echo $info['State']; ?>" required/>
                             </div>
                         </div>
                         <center>
