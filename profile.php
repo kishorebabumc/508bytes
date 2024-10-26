@@ -15,7 +15,7 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1";
+$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo as Mobile, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1 AND applicants.isAdmin != 1";
 $jres = mysqli_query($connection, $japp);
 
 
@@ -129,7 +129,7 @@ $jres = mysqli_query($connection, $japp);
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $render['firstName']." ".$render['lastName']; ?></td>
                                             <td><?php echo $render['appid']; ?></td>
-                                            <td><?php echo $render['mobileNo']; ?></td>
+                                            <td><?php echo $render['Mobile']; ?></td>
                                             <td><?php echo $render['Address'] . ", " . $render['City']; ?></td>
                                             <td><?php echo isset($render['applied']) ? "Yes" : ""; ?></td>
                                             <td><?php echo isset($render['profileup']) ? "Yes" : "";; ?></td>
