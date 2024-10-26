@@ -3,20 +3,29 @@ include('session.php');
 $_SESSION['Page'] = 'career';
 include("config.php");
 include("header.php");
-if(isset($_GET['jobid'])){
+if (isset($_GET['jobid'])) {
     $jodid = $_GET['jobid'];
-    $jobdetailsquery = mysqli_query($connection,"SELECT * FROM `jobs` WHERE JobID = '$jodid'");
+    $jobdetailsquery = mysqli_query($connection, "SELECT * FROM `jobs` WHERE JobID = '$jodid'");
     $jobdetails = mysqli_fetch_assoc($jobdetailsquery);
-    $jobdescquery = mysqli_query($connection,"SELECT * FROM `JobDesc` WHERE JobID = '$jodid'");
+    $jobdescquery = mysqli_query($connection, "SELECT * FROM `JobDesc` WHERE JobID = '$jodid'");
     $jobdesc = mysqli_fetch_assoc($jobdescquery);
-    $jobminqua = mysqli_query($connection,"SELECT * FROM `JobMinQua` WHERE JobID = '$jodid'");
-    $jobprefqua = mysqli_query($connection,"SELECT * FROM `JobPreQua` WHERE JobID = '$jodid'");
+    $jobminqua = mysqli_query($connection, "SELECT * FROM `JobMinQua` WHERE JobID = '$jodid'");
+    $jobprefqua = mysqli_query($connection, "SELECT * FROM `JobPreQua` WHERE JobID = '$jodid'");
     $Count = 0;
-    if(isset($_SESSION['Email'])){
+    if (isset($_SESSION['Email'])) {
         $email = $_SESSION['Email'];
-        $Applied = mysqli_query($connection,"SELECT * FROM `job_applied` WHERE JobID = '$jodid' AND email = '$email'");
+        $Applied = mysqli_query($connection, "SELECT * FROM `job_applied` WHERE JobID = '$jodid' AND email = '$email'");
         $Count = mysqli_num_rows($Applied);
     }
+}
+$selectq = "SELECT  * FROM personal_info where email = '$email'";
+$Executeq = mysqli_query($connection, $selectq);
+$fetchq = mysqli_fetch_assoc($Executeq);
+$numb = 0;
+if (file_exists("upload/" . $fetchq['FileName'])) {
+    $numb = 1;
+} else {
+    $numb = 0;
 }
 ?>
 <div class="inner-banner">
@@ -82,10 +91,10 @@ if(isset($_GET['jobid'])){
                     <div>
                         <h5>Minimum qualifications:</h5>
                         <ol class="job-qualification" style="text-align:left;">
-                             <?php 
-                                while($row = mysqli_fetch_assoc($jobminqua)){
-                                    echo '<li class="quali">'.$row['MinQualification'].'</li>';
-                                }
+                            <?php
+                            while ($row = mysqli_fetch_assoc($jobminqua)) {
+                                echo '<li class="quali">' . $row['MinQualification'] . '</li>';
+                            }
 
                             ?>
                         </ol>
@@ -93,10 +102,10 @@ if(isset($_GET['jobid'])){
                     <div>
                         <h5>Preffered Qualifications</h5>
                         <ol class="job-qualification" style="display:block important;text-align:left;">
-                            <?php 
-                                while($row = mysqli_fetch_assoc($jobprefqua)){
-                                    echo '<li class="quali">'.$row['PreQualification'].'</li>';
-                                }
+                            <?php
+                            while ($row = mysqli_fetch_assoc($jobprefqua)) {
+                                echo '<li class="quali">' . $row['PreQualification'] . '</li>';
+                            }
 
                             ?>
                         </ol>
@@ -104,38 +113,38 @@ if(isset($_GET['jobid'])){
                     <div>
                         <h5>About the job</h5>
                         <p style="text-align:left; margin-left:20px;">
-                        <?php echo $jobdesc['AboutJob']; ?>
+                            <?php echo $jobdesc['AboutJob']; ?>
                         </p>
                     </div>
                     <?php
-                        if(isset($_SESSION['FirstName'])){
+                    if (isset($_SESSION['FirstName'])) {
                     ?>
-                    <div class="btn" id="ApplyBtn">
-                        
-                        <?php if($Count > 0 ){
-                            echo "<p class='text-danger'>You are already applied, please check your profile for status</p>";
-                        }else{?>
-                            <button type="button" onclick="ApplyNow('<?php echo $_GET['jobid'];?>')" class="btn button-style" id="disable">Apply Now</button>
-                        <?php } ?>
-                        <!-- </a> -->
-                    </div>
+                        <div class="btn" id="ApplyBtn">
+
+                            <?php if ($Count > 0) {
+                                echo "<p class='text-danger'>You are already applied, please check your profile for status</p>";
+                            } else { ?>
+                                <button type="button" onclick="ApplyNow('<?php echo $_GET['jobid']; ?>','<?php echo $numb ?>')" class="btn button-style" id="disable">Apply Now</button>
+                            <?php } ?>
+                            <!-- </a> -->
+                        </div>
                     <?php
-                        }
+                    }
                     ?>
                     <?php
-                        if(!isset($_SESSION['FirstName'])){
+                    if (!isset($_SESSION['FirstName'])) {
                     ?>
-                    <div>
-                        <a href="register_app.php">
-                            <button type="button" class="btn button-style" id="disable">Register Now</button>                            
-                        </a>
-                    </div>
-                    <div>
-                        <p>If, already registered, please <a href='login.php'> click here </a> to login </p>                            
-                        </a>
-                    </div>
+                        <div>
+                            <a href="register_app.php">
+                                <button type="button" class="btn button-style" id="disable">Register Now</button>
+                            </a>
+                        </div>
+                        <div>
+                            <p>If, already registered, please <a href='login.php'> click here </a> to login </p>
+                            </a>
+                        </div>
                     <?php
-                        }
+                    }
                     ?>
                 </div>
             </div>
@@ -148,36 +157,26 @@ if(isset($_GET['jobid'])){
 include("footer.php");
 ?>
 <script>
-function ApplyNow(JobID){
-    if(JobID){
-        $.ajax({
-            url: "apply_now.php",
-            method: 'POST',
-            data: {JobID},
-            success: function(res){
-                $("#ApplyBtn").text(res);
+    function ApplyNow(JobID, check) {
+        if (check == 1) {
+            if (JobID) {
+                $.ajax({
+                    url: "apply_now.php",
+                    method: 'POST',
+                    data: {
+                        JobID
+                    },
+                    success: function(res) {
+                        $("#ApplyBtn").text(res);
+                    }
+                })
+            } else {
+                alert("No Job ID");
             }
-        })
-    }else{
-        alert("No Job ID");
+        }
+        else{
+            $("#ApplyBtn").text("Please upload your resume");
+        }
+
     }
-}
 </script>
-<!-- <script>
-function enable(){
-    const d = new Date(); // 2024-10-27T23:00:00
-    const d1 = new Date('2024-10-23T21:17:00');
-    if(d === d1){
-            document.getElementById("disable").style.display="block";
-    }
-    else{
-        document.getElementById("disable").style.display="none";
-
-    }
-}
-
-document.addEventListener("DOMContentLoaded", (event) => {
-  console.log("DOM fully loaded and parsed");
-});
-    
-</script> -->

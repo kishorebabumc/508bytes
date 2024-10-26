@@ -202,7 +202,7 @@ include("header.php");
                                 <input type="text" id="State" name="State" value="<?php echo $info['State']?>" class="form-control" placeholder="Enter State " disabled/>
                             </div>
                         </div>
-                        <a href="profile.php">
+                        <a href="career.php">
                             <button id="submit_btn" type="button" class="btn button-style" onclick="">Back</button>
                         </a>
                     </form>

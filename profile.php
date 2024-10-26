@@ -9,6 +9,8 @@ $ret = mysqli_fetch_assoc($exe);
 $sele = "SELECT * FROM jobs INNER JOIN job_applied on jobs.JobID=job_applied.JobID where email ='$email'";
 $exec = mysqli_query($connection, $sele);
 
+
+
 ?>
 <style>
     .project-tab {
@@ -59,6 +61,7 @@ $exec = mysqli_query($connection, $sele);
         font-weight: 600;
     }
 </style>
+
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
         <div class="container">
@@ -66,6 +69,9 @@ $exec = mysqli_query($connection, $sele);
         </div>
     </section>
 </div>
+
+
+ 
 <div class="area-box">
     <!-- <div class="col-md-12 mt-md-0 mt-4" style="align-items: center;"> -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -251,38 +257,7 @@ $exec = mysqli_query($connection, $sele);
 
 </div>
 
-<!-- <style>
-    th,
-    td {
-        color: black;
-        padding: 10px;
-        text-align: center;
-    }
 
-    table {
-        width: 50%;
-        /* margin-top:30px */
-    }
-</style>
-<div class="d-flex justify-content-center">
-    <table border="1">
-        <tr>
-            <th class="p-10">Id</th>
-            <th>Applied job</th>
-            <th>Status</th>
-        </tr>
-        <?php
-
-        while ($rete = mysqli_fetch_assoc($exec)) {
-        ?>
-        <tr>
-            <td><?php echo $rete['JobID']; ?></td>
-            <td><?php echo $rete['Description']; ?></td>
-            <td>Active</td>
-        </tr>
-        <?php } ?>
-    </table>
-</div> -->
 <?php
 include("footer.php");
 ?>
