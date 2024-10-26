@@ -15,7 +15,7 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT *, job_applied.email FROM job_applied LEFT JOIN applicants ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description LEFT JOIN personal_info ON personal_info.email = job_applied.email ";
+$japp = "SELECT *, applicants.email FROM applicants LEFT JOIN job_applied ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description LEFT JOIN personal_info ON personal_info.email = job_applied.email;";
 $jres = mysqli_query($connection, $japp);
 
 
