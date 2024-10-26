@@ -128,7 +128,7 @@ $jres = mysqli_query($connection, $japp);
                                         <tr>
                                             <td><?php echo $i; ?></td>
                                             <td><?php echo $render['firstName']." ".$render['lastName']; ?></td>
-                                            <td><?php echo $render['email']; ?></td>
+                                            <td><?php echo $render['appid']; ?></td>
                                             <td><?php echo $render['mobileNo']; ?></td>
                                             <td><?php echo $render['Address'] . ", " . $render['City']; ?></td>
                                             <td><?php echo isset($render['applied']) ? "Yes" : ""; ?></td>
