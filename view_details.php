@@ -3,6 +3,7 @@ include('session.php');
 $_SESSION['Page'] = 'career';
 include("config.php");
 include("header.php");
+$numb = 0;
 if (isset($_GET['jobid'])) {
     $jodid = $_GET['jobid'];
     $jobdetailsquery = mysqli_query($connection, "SELECT * FROM `jobs` WHERE JobID = '$jodid'");
@@ -16,17 +17,22 @@ if (isset($_GET['jobid'])) {
         $email = $_SESSION['Email'];
         $Applied = mysqli_query($connection, "SELECT * FROM `job_applied` WHERE JobID = '$jodid' AND email = '$email'");
         $Count = mysqli_num_rows($Applied);
+
+
+        $selectq = "SELECT  * FROM personal_info where email = '$email'";
+        $Executeq = mysqli_query($connection, $selectq);
+        $fetchq = mysqli_fetch_assoc($Executeq);
+        $cal = mysqli_num_rows($Executeq);
+
+        if ($cal>0&&file_exists("uploads/" . $fetchq['FileName'])) {
+            $numb = 1;
+        } else {
+            $numb = 0;
+        }
     }
 }
-$selectq = "SELECT  * FROM personal_info where email = '$email'";
-$Executeq = mysqli_query($connection, $selectq);
-$fetchq = mysqli_fetch_assoc($Executeq);
-$numb = 0;
-if (file_exists("upload/" . $fetchq['FileName'])) {
-    $numb = 1;
-} else {
-    $numb = 0;
-}
+
+
 ?>
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
@@ -173,9 +179,8 @@ include("footer.php");
             } else {
                 alert("No Job ID");
             }
-        }
-        else{
-            $("#ApplyBtn").text("Please upload your resume");
+        } else {
+            $("#ApplyBtn").html("Please upload your resume in Profile <a href='modify_info.php'>Click Here</a>");
         }
 
     }

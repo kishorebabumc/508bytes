@@ -1,5 +1,8 @@
 <?php
 include('session.php');
+if(!isset($_SESSION['Email'])){
+    header("location: career.php");
+}
 include("header.php");
 include("config.php");
 $email = $_SESSION['Email'];
@@ -9,6 +12,11 @@ $ret = mysqli_fetch_assoc($exe);
 $sele = "SELECT * FROM jobs INNER JOIN job_applied on jobs.JobID=job_applied.JobID where email ='$email'";
 $exec = mysqli_query($connection, $sele);
 
+$qjob = "SELECT * FROM jobs";
+$resjob = mysqli_query($connection, $qjob);
+
+$japp = "SELECT * FROM job_applied LEFT JOIN applicants ON job_applied.email = applicants.email LEFT JOIN jobs ON job_applied.JobID = jobs.Description ";
+$jres = mysqli_query($connection, $japp);
 
 
 ?>
@@ -71,7 +79,7 @@ $exec = mysqli_query($connection, $sele);
 </div>
 
 
- 
+
 <div class="area-box">
     <!-- <div class="col-md-12 mt-md-0 mt-4" style="align-items: center;"> -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -81,7 +89,46 @@ $exec = mysqli_query($connection, $sele);
 
     <section id="tabs" class="project-tab">
         <div class="container">
-            <div class="row">
+            <?php if ($ret['isAdmin'] == 1) { ?>
+                <div class="row">
+                    <div class="col-md-3 ">
+
+                        <?php while ($drop = mysqli_fetch_assoc($resjob)) {
+                        ?>
+                            <div class="card ms-3 me-3 mt-3 p-3">
+                                <span><?php echo $drop['Description']; ?></span>
+                            </div>
+
+
+                        <?php } ?>
+
+                        </ul>
+                    </div>
+
+                    <div class="col-md-9">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">SI NO</th>
+                                    <th scope="col">Name Of The Applicant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php 
+                            $i = 0;
+                            while($render = mysqli_fetch_assoc($jres)) {
+                                $i++;  ?>
+                                <tr>
+                                    <td><?php echo $i ; ?></td>
+                                    <td><?php echo $render['firstName']  ; ?></td>
+                                </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            <?php } else { ?>
                 <div class="col-md-12">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -144,10 +191,7 @@ $exec = mysqli_query($connection, $sele);
                             <div class="form-group row">
                                 <label class="col-sm-2"></label>
                                 <label for="EmailAddress" class="col-sm-2 col-form-label">Resume</label>
-                                <!-- <div class="col-sm-4">
-            <input type="file" id="fileUpload" name="fileUpload" accept=".pdf, .doc, .docx" atocomplete="off" required>
-            <label class="text-danger">* Note: file must be less than 3 MB</label>
-        </div> -->
+
                                 <div class="col-sm-2">
                                     <a class="btn btn-primary" href="uploads/<?php echo $ret['FileName']; ?>" download>Download</a>
                                 </div>
@@ -250,7 +294,7 @@ $exec = mysqli_query($connection, $sele);
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php } ?>
         </div>
     </section>
 

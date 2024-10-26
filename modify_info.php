@@ -1,6 +1,9 @@
 <?php
 
 include("session.php");
+if(!isset($_SESSION['Email'])){
+    header("location: career.php");
+}
 include("config.php");
 
 $_SESSION['Page'] = 'career';
