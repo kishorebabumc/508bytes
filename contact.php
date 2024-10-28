@@ -84,8 +84,10 @@ include("header.php");
 </div> -->
 <!-- //contact -->
 <gmp-map center="16.5415199,80.6423475" zoom="16" map-id="DEMO_MAP_ID">
-      <gmp-advanced-marker position="16.5415199,80.6423475" title="My location"></gmp-advanced-marker>
-    </gmp-map>
+    <gmp-advanced-marker position="16.5415199,80.6423475" title="My location"></gmp-advanced-marker>
+</gmp-map>
+<!-- <a href="https://www.google.com/maps/search/?api=1&query=16.5415782,80.6423585">Open in Google Maps</a> -->
+
 
 
 <?php

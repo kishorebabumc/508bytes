@@ -15,7 +15,7 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo as Mobile, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1 AND applicants.isAdmin != 1";
+$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo as Mobile, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied, job_applied.Remarks, job_applied.Attended FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1 AND applicants.isAdmin != 1";
 $jres = mysqli_query($connection, $japp);
 
 
@@ -100,15 +100,65 @@ $jres = mysqli_query($connection, $japp);
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All Applicants</a>
-                            <a class="nav-item nav-link" id="stage-2-tab" data-toggle="tab" href="#stage-2" role="tab" aria-controls="stage-2" aria-selected="false">Stage - 2</a>
-                            <a class="nav-item nav-link" id="stage-3-tab" data-toggle="tab" href="#stage-3" role="tab" aria-controls="stage-3" aria-selected="false">Stage - 3</a>
-                            <a class="nav-item nav-link" id="stage-4-tab" data-toggle="tab" href="#stage-4" role="tab" aria-controls="stage-4" aria-selected="false">Stage - 4</a>
+                            <a class="nav-item nav-link" id="stage-2-tab" data-toggle="tab" href="#stage-2" role="tab" aria-controls="stage-2" aria-selected="false">Interviewed</a>
+                            <a class="nav-item nav-link" id="stage-3-tab" data-toggle="tab" href="#stage-3" role="tab" aria-controls="stage-3" aria-selected="false">Short Listed</a>
+                            <a class="nav-item nav-link" id="stage-4-tab" data-toggle="tab" href="#stage-4" role="tab" aria-controls="stage-4" aria-selected="false">Final Candidates</a>
                             <!-- <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Others</a> -->
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <table class="table  mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Sl No</th>
+                                        <th scope="col">Name of the Applicant</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Applied</th>
+                                        <th scope="col">Personal Info</th>
+                                        <th scope="col">Resume</th>
+                                        <th scope="col">Remarks</th>
+                                        <th scope="col">Attended</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $i = 0;
+                                    while ($render = mysqli_fetch_assoc($jres)) {
+                                        $i++;  ?>
+                                        <tr>
+                                            <td><?php echo $i; ?></td>
+                                            <td><a href="applicant_details.php?email=<?php echo $render['appid']; ?>"><?php echo $render['firstName'] . " " . $render['lastName']; ?></a></td>
+                                            <td><?php echo $render['appid']; ?></td>
+                                            <td><?php echo $render['Mobile']; ?></td>
+                                            <td><?php echo $render['Address'] . ", " . $render['City']; ?></td>
+                                            <td><?php echo isset($render['applied']) ? "Yes" : ""; ?></td>
+                                            <td><?php echo isset($render['profileup']) ? "Yes" : "";; ?></td>
+                                            <td><?php if (isset($render['FileName'])) {
+                                                    echo '<a class="btn btn-primary" href="uploads/' . $render['FileName'] . '" download>View</a>';
+                                                } ?></td>
+                                            <td><?php echo $render['Remarks'] ?></td>
+                                            <td>
+                                            <?php
+                                                if(is_null($render['Attended'])) { ?>
+                                                <i class="fa-solid fa-check text-success" onclick="updateAttendence('<?php echo $render['appid']; ?>','Yes')"></i> 
+                                                / 
+                                                <i class="fa-solid fa-xmark text-danger" onclick="updateAttendence('<?php echo $render['appid']; ?>','No')"></i>
+
+                                                <?php } else{
+                                                        echo $render['Attended'];
+                                                } ?>
+                                                
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="stage-2" role="tabpanel" aria-labelledby="stage-2-tab">
+                            <table class="table" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th scope="col">SI NO</th>
@@ -122,45 +172,7 @@ $jres = mysqli_query($connection, $japp);
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $i = 0;
-                                    while ($render = mysqli_fetch_assoc($jres)) {
-                                        $i++;  ?>
-                                        <tr>
-                                            <td><?php echo $i; ?></td>
-                                            <td><?php echo $render['firstName']." ".$render['lastName']; ?></td>
-                                            <td><?php echo $render['appid']; ?></td>
-                                            <td><?php echo $render['Mobile']; ?></td>
-                                            <td><?php echo $render['Address'] . ", " . $render['City']; ?></td>
-                                            <td><?php echo isset($render['applied']) ? "Yes" : ""; ?></td>
-                                            <td><?php echo isset($render['profileup']) ? "Yes" : "";; ?></td>
-                                            <td><?php if(isset($render['FileName'])){ echo '<a class="btn btn-primary" href="uploads/'.$render['FileName'].'" download>View</a>'; } ?></td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="stage-2" role="tabpanel" aria-labelledby="stage-2-tab">
-                            <table class="table" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th class="p-10">Id</th>
-                                        <th>Applied job</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
 
-                                    <?php
-
-                                    while ($rete = mysqli_fetch_assoc($exec)) {
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $rete['JobID']; ?></td>
-                                            <td><?php echo $rete['Description']; ?></td>
-                                            <td>Active</td>
-                                        </tr>
-                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -168,27 +180,18 @@ $jres = mysqli_query($connection, $japp);
                             <table class="table" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Contest Name</th>
-                                        <th>Date</th>
-                                        <th>Award Position</th>
+                                        <th scope="col">SI NO</th>
+                                        <th scope="col">Name Of The Applicant</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Applied</th>
+                                        <th scope="col">Persnol Info</th>
+                                        <th scope="col">Resume</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href="#">Work 1</a></td>
-                                        <td>Doe</td>
-                                        <td>john@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">Work 2</a></td>
-                                        <td>Moe</td>
-                                        <td>mary@example.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#">Work 3</a></td>
-                                        <td>Dooley</td>
-                                        <td>july@example.com</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -386,3 +389,20 @@ $jres = mysqli_query($connection, $japp);
 <?php
 include("footer.php");
 ?>
+<script>
+function updateAttendence(email,type){
+    $.ajax({
+        url:"update_attendence.php",
+        method:"post",
+        data:{
+            email,
+            type
+        },
+        success:function(res){
+
+        }
+
+
+    })
+}
+</script>

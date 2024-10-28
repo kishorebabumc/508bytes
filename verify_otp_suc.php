@@ -37,6 +37,7 @@ if($dataCount == 1){
     <div class="container py-lg-1 py-md-1 py-1">
         <div class="text-center mb-sm-2 mb-2">
             <h3 class="title-big">Registration <?php if($dataCount == 1) echo "Successfull."; else echo "failed."; ?></h3>
+            <h3 class="title-big"><?php if($dataCount == 1) echo "Login - Update your profile, and then click on apply..";  ?></h3>
         </div>
         <div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
             <div class="row contact-block">
