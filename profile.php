@@ -197,7 +197,8 @@ $final_Exe = mysqli_query($connection, $final);
                                         $j++; ?>
                                         <tr>
                                             <td><?php echo $j; ?></td>
-                                            <td><?php echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; ?></td>
+                                            <td><a href="applicant_details.php?email=<?php echo $fetchrows['applied']; ?>"><?php echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; ?></a></td>
+                                            <!-- <td><?php // echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; ?></td> -->
                                             <td><?php echo $fetchrows['LogicalAssessment'] 
                                                 ?></td>
                                             <td><?php echo $fetchrows['LogicalMarks'] 
