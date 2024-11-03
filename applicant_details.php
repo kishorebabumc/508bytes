@@ -10,10 +10,6 @@ ON job_applied.email = applicants.email WHERE applicants.email = '$Email'";
 $exeq = mysqli_query($connection, $selq);
 echo mysqli_error($connection);
 $fetch_data = mysqli_fetch_assoc($exeq);
-// $Remarks = $_POST['Reamrks'];
-// $updateq = "UPDATE job_applied SET Remarks = '$Remarks'";
-// $exeupq = mysqli_query($connection, $updateq);
-
 ?>
 <div class="inner-banner">
     <section class="w3l-breadcrumb">
@@ -30,116 +26,10 @@ $fetch_data = mysqli_fetch_assoc($exeq);
 </div>
 <div class="area-box">
     <div class="col-md-12 mt-md-0 mt-4" style="align-items: center;">
-        <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-        <!-- <section id="tabs" class="project-tab">
-            <div class="container">
-                <div class="col-md-12">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="profile-img d-flex justify-content-center pb-5 mt-4"></div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="firstName" class="form-control" id="inputFirstName" value="<?php echo $fetch_data['firstName']; ?>" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="lastName" class="form-control" id="inputLastName" value="<?php echo $fetch_data['lastName']; ?>" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="MobileNo" class="col-sm-2 col-form-label">Mobile No.</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="mobileNo" minlength="10" maxlength="10" class="form-control" id="MobileNo" placeholder="Mobile Number" value="<?php echo $fetch_data['mobileNo']; ?>" utocomplete="off">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="EmailAddress" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-6">
-                                    <input type="email" name="email" class="form-control" id="EmailAddress" value="<?php echo $fetch_data['email']; ?>" autocomplete="off" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="Qualification" class="col-sm-2 col-form-label">Qualification</label>
-                                <div class="col-sm-6">
-                                    <input type="email" name="email" class="form-control" id="EmailAddress" value="<?php echo $fetch_data['Qualification']; ?>" autocomplete="off" readonly>
 
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="EmailAddress" class="col-sm-2 col-form-label">Resume</label>
-
-                                <div class="col-sm-2">
-                                    <a class="btn btn-primary" href="uploads/" download>Download</a>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Date Of Birth</label>
-                                <div class="col-sm-3">
-                                    <input type="date" name="DateOfBirth" value="<?php echo $fetch_data['DateOfBirth']; ?>" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Skills</label>
-                                <div class="col-sm-6">
-                                    <textarea class="form-control" name="Skills" id="" cols="30" rows="3" placeholder="Type a skill"><?php echo $fetch_data['Skills']; ?></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Languages</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="skillInput" name="Languages" class="form-control" placeholder="Type Known Languages" value="<?php echo $fetch_data['Languages']; ?>" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="Address" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="Address" class="form-control" name="Address" placeholder="Enter Your Address" value="<?php echo $fetch_data['Address']; ?>" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="City" class="col-sm-2 col-form-label">City</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="City" name="City" class="form-control" placeholder="Enter City " value="<?php echo $fetch_data['City']; ?>" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="State" class="col-sm-2 col-form-label">State</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="State" name="State" class="form-control" placeholder="Enter State" value="<?php echo $fetch_data['State']; ?>" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
         <section id="tabs" class="project-tab">
             <div class="container">
                 <div class="col-md-12">
-                    <!-- <nav>
-                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Profile</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Jobs</a>
-                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Others</a>
-                        </div>
-                    </nav> -->
                     <style>
                         table,
                         th,
@@ -165,55 +55,31 @@ $fetch_data = mysqli_fetch_assoc($exeq);
                                     <th>Last Name</th>
                                     <td><?php echo $fetch_data['lastName']; ?></td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>Last Name</th>
-                                    <td><?php //echo $fetch_data['lastName']; 
-                                        ?></td>
-                                </tr> -->
                                 <tr>
                                     <th>Email</th>
                                     <td id="email"><?php echo $fetch_data['email']; ?></td>
                                     <th>DateOfBirth</th>
                                     <td><?php echo $fetch_data['DateOfBirth']; ?></td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>DateOfBirth</th>
-                                    <td><?php //echo $fetch_data['DateOfBirth']; 
-                                        ?></td>
-                                </tr> -->
+
                                 <tr>
                                     <th>Gender</th>
                                     <td><?php echo $fetch_data['gender']; ?></td>
                                     <th>Mobile No</th>
                                     <td><?php echo $fetch_data['mobileNo']; ?></td>
                                 </tr>
-                                <!-- <tr>
-                                        <th>Mobile No</th>
-                                    <td><?php //echo $fetch_data['mobileNo']; 
-                                        ?></td>
-                                </tr> -->
                                 <tr>
                                     <th>Qualification</th>
                                     <td><?php echo $fetch_data['Qualification']; ?></td>
                                     <th>Skills</th>
                                     <td><?php echo $fetch_data['Skills']; ?></td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>Skills</th>
-                                    <td><?php //echo $fetch_data['Skills']; 
-                                        ?></td>
-                                </tr> -->
                                 <tr>
                                     <th>Languages</th>
                                     <td><?php echo $fetch_data['Languages']; ?></td>
                                     <th>Address</th>
                                     <td><?php echo $fetch_data['Address']; ?></td>
                                 </tr>
-                                <!-- <tr>
-                                    <th>Address</th>
-                                    <td><?php //echo $fetch_data['Address']; 
-                                        ?></td>
-                                </tr> -->
                                 <tr>
                                     <th>City</th>
                                     <td><?php echo $fetch_data['City']; ?></td>
@@ -224,114 +90,68 @@ $fetch_data = mysqli_fetch_assoc($exeq);
                                 <tr>
                                     <th>Resume</th>
                                     <td>
-                                        <!-- <a href="viewFile.php" target="_blank">Open File in New Tab</a> -->
                                         <a href="view_file.php?name=<?php echo $fetch_data['FileName']; ?>" class="btn btn-primary" target="_blank">Download</a>
                                     </td>
-                                    <th id="success" colspan="2" >Updated Successfully</th>
+                                    <th id="success" colspan="2">Updated Successfully</th>
                                 </tr>
                                 </tr>
                             </table>
-                            <div class="mt-5">
+                            <div class="mt-5" id="remark">
                                 <div>
                                     <label for="">Remarks</label>
                                     <div class="d-flex">
-                                        
-                                            <textarea class="form-control" name="Remarks" id ="remarks"></textarea>
-                                            <div class="d-flex ml-3 align-items-end">
-                                                <button type="button" class="btn btn-primary"  onclick="upDate()" id="update-btn">Update</button>
-                                                <a href="profile.php"><button type="button" class="btn btn-info ml-3">Back</button></a>
-                                            </div>
+                                        <textarea class="form-control" name="Remarks" id="remarks"><?php echo $fetch_data['Remarks']; ?></textarea>
+                                        <div class="d-flex ml-3 align-items-end">
+                                            <button type="button" class="btn btn-primary" onclick="upDate()">Update</button>
+                                        </div>
                                     </div>
-                                    <center id="ups"></center>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row">
-                                <label class="col-sm-0"></label>
-                                <label for="inputFirstName" class="col-sm-0 col-form-label">First Name</label>
-                                <div class="col-sm-2">
-                                    <input type="text" name="firstName" class="form-control" id="inputFirstName" value="<?php echo $fetch_data['firstName']; ?>" autocomplete="off">
+                            <div class="mt-5" id="remarks-1">
+                                <div>
+                                    <label for="">Logical Assessment</label>
+                                    <div class="d-flex">
+                                        <textarea class="form-control" name="Remarks" id="remarks1"><?php echo $fetch_data['LogicalAssessment']; ?></textarea>
+                                        <div class="d-flex ml-3 align-items-center">
+                                            <input type="number" value="<?php echo $fetch_data['LogicalMarks']; ?>" style="height:60px;" id="logical_marks" class="form-control" placeholder="Enter Marks">
+                                        </div>
+                                        <div class="d-flex ml-3 align-items-end">
+                                            <button type="button" class="btn btn-primary" onclick="upDate1()">Update</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="lastName" class="form-control" id="inputLastName" value="<?php echo $fetch_data['lastName']; ?>" autocomplete="off">
+                            <div class="mt-5" id="remarks-2">
+                                <div>
+                                    <label for="">Techanical Assessment</label>
+                                    <div class="d-flex">
+                                        <textarea class="form-control" name="Remarks" id="remarks2"><?php echo $fetch_data['TechnicalAssessment']; ?></textarea>
+                                        <div class="d-flex ml-3 align-items-center">
+                                            <input type="number"  value="<?php echo $fetch_data['TechnicalMarks']; ?>"style="height:60px;" id="technical_marks" class="form-control" placeholder="Enter Marks">
+                                        </div>
+                                        <div class="d-flex ml-3 align-items-end">
+                                            <button type="button" class="btn btn-primary" onclick=" upDate2()">Update</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="MobileNo" class="col-sm-2 col-form-label">Mobile No.</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="mobileNo" minlength="10" maxlength="10" class="form-control" id="MobileNo" placeholder="Mobile Number" value="<?php echo $fetch_data['mobileNo']; ?>" utocomplete="off">
+                            <div class="mt-5" id="remarks-3">
+                                <div>
+                                    <label for="">Interview Remarks</label>
+                                    <div class="d-flex">
+                                        <textarea class="form-control" name="Remarks" id="remarks3"><?php echo $fetch_data['InterviewRemarks']; ?></textarea>
+                                        <div class="d-flex ml-3 align-items-center">
+                                            <input type="number" value="<?php echo $fetch_data['InterviewMarks']; ?>" style="height:60px;" id="interview_marks" class="form-control" placeholder="Enter Marks">
+                                        </div>
+                                        <div class="d-flex ml-3 align-items-end">
+                                            <button type="button" class="btn btn-primary" onclick="upDate3()">Update</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="EmailAddress" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-6">
-                                    <input type="email" name="email" class="form-control" id="EmailAddress" value="<?php echo $fetch_data['email']; ?>" autocomplete="off" readonly>
-                                </div>
+                            <div class="mt-5">
+                                <a href="profile.php"><button type="button" class="btn btn-info ml-3">Back</button></a>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="Qualification" class="col-sm-2 col-form-label">Qualification</label>
-                                <div class="col-sm-6">
-                                    <input type="email" name="email" class="form-control" id="EmailAddress" value="<?php echo $fetch_data['Qualification']; ?>" autocomplete="off" readonly>
-
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="EmailAddress" class="col-sm-2 col-form-label">Resume</label>
-
-                                <div class="col-sm-2">
-                                    <a class="btn btn-primary" href="uploads/" download>Download</a>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Date Of Birth</label>
-                                <div class="col-sm-3">
-                                    <input type="date" name="DateOfBirth" value="<?php echo $fetch_data['DateOfBirth']; ?>" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Skills</label>
-                                <div class="col-sm-6">
-                                    <textarea class="form-control" name="Skills" id="" cols="30" rows="3" placeholder="Type a skill"><?php echo $fetch_data['Skills']; ?></textarea>
-                                    <input type="text" id="skillInput"  /> 
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Languages</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="skillInput" name="Languages" class="form-control" placeholder="Type Known Languages" value="<?php echo $fetch_data['Languages']; ?>" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="Address" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="Address" class="form-control" name="Address" placeholder="Enter Your Address" value="<?php echo $fetch_data['Address']; ?>" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="City" class="col-sm-2 col-form-label">City</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="City" name="City" class="form-control" placeholder="Enter City " value="<?php echo $fetch_data['City']; ?>" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2"></label>
-                                <label for="State" class="col-sm-2 col-form-label">State</label>
-                                <div class="col-sm-6">
-                                    <input type="text" id="State" name="State" class="form-control" placeholder="Enter State" value="<?php echo $fetch_data['State']; ?>" />
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -342,33 +162,111 @@ $fetch_data = mysqli_fetch_assoc($exeq);
     include('footer.php');
     ?>
     <script>
-                document.getElementById("success").style.display = "none";
+        document.getElementById("success").style.display = "none";
+        document.getElementById("remarks-1").style.display = "none";
+        document.getElementById("remarks-2").style.display = "none";
+        document.getElementById("remarks-3").style.display = "none";
 
+        <?php if (!is_null($fetch_data['LogicalAssessment'])) { ?>
+            document.getElementById("remarks-1").style.display = "block";
+            document.getElementById("remarks-2").style.display = "block";
+            document.getElementById("remarks-3").style.display = "block";
+        <?php } elseif (!is_null($fetch_data['Remarks'])) { ?>
+            document.getElementById("remarks-1").style.display = "block";
+        <?php } ?>
         function upDate() {
-        var remarks = document.getElementById("remarks").value;
-        var mail = document.getElementById("email").innerText;
-        var ups = document.getElementById("ups");
+            var remarks = document.getElementById("remarks").value;
+            var mail = document.getElementById("email").innerText;
             $.ajax({
-            url: "update_remarks.php",
-            method: "post",
-            data:{
+                url: "update_remarks.php",
+                method: "post",
+                data: {
                     remarks,
                     mail
-            },
-            success: function(result) {   
-                // ups.innerText="Updated Successfully"
-                document.getElementById("success").style.display = "table-cell";
-                document.getElementById("success").colSpan=2;
-                document.getElementById("remarks").disabled=true;
-                document.getElementById("update-btn").disabled=true;
+                },
+                success: function(result) {
+                    
+                    document.getElementById("success").style.display = "table-cell";
+                    document.getElementById("success").colSpan = 2;
+                    document.getElementById("remarks-1").style.display = 'block';
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    alert('An error occurred: ' + errorThrown);
+                }
+            })
+        }
 
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('AJAX Error:', textStatus, errorThrown);
-                alert('An error occurred: ' + errorThrown);
-            }
-        })
+        function upDate1() {
+            var remarks1 = document.getElementById("remarks1").value;
+            var logical_marks = document.getElementById("logical_marks").value;
+            var mail = document.getElementById("email").innerText;
+            $.ajax({
+                url: "update_remarks1.php",
+                method: "post",
+                data: {
+                    remarks1,
+                    logical_marks,
+                    mail
+                },
+                success: function(result1) {                
+                    document.getElementById("success").style.display = "table-cell";
+                    document.getElementById("success").colSpan = 2;
+                    document.getElementById("remarks-2").style.display = 'block';
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    alert('An error occurred: ' + errorThrown);
+                }
+            })
 
-        
+
+        }
+
+        function upDate2() {
+            var remarks2 = document.getElementById("remarks2").value;
+            var technical_marks = document.getElementById("technical_marks").value;
+            var mail = document.getElementById("email").innerText;
+            $.ajax({
+                url: "update_remarks2.php",
+                method: "post",
+                data: {
+                    remarks2,
+                    technical_marks,
+                    mail
+                },
+                success: function(result2) {                    
+                    document.getElementById("success").style.display = "table-cell";
+                    document.getElementById("remarks-3").style.display = "block";
+                    document.getElementById("success").colSpan = 2;
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    alert('An error occurred: ' + errorThrown);
+                }
+            })
+        }
+
+        function upDate3() {
+            var remarks3 = document.getElementById("remarks3").value;
+            var interview_marks = document.getElementById("interview_marks").value;
+            var mail = document.getElementById("email").innerText;
+            $.ajax({
+                url: "update_remarks3.php",
+                method: "post",
+                data: {
+                    remarks3,
+                    interview_marks,
+                    mail
+                },
+                success: function(result3) {                    
+                    document.getElementById("success").style.display = "table-cell";                    
+                    document.getElementById("success").colSpan = 2;
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    alert('An error occurred: ' + errorThrown);
+                }
+            })
         }
     </script>

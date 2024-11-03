@@ -1,4 +1,7 @@
 <?php
+
+use function PHPUnit\Framework\isNull;
+
 include('session.php');
 if (!isset($_SESSION['Email'])) {
     header("location: career.php");
@@ -15,10 +18,23 @@ $exec = mysqli_query($connection, $sele);
 $qjob = "SELECT * FROM jobs";
 $resjob = mysqli_query($connection, $qjob);
 
-$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo as Mobile, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied, job_applied.Remarks, job_applied.Attended FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1 AND applicants.isAdmin != 1";
+$japp = "SELECT applicants.id, applicants.email as appid, applicants.firstName, applicants.lastName, applicants.mobileNo as Mobile, applicants.verified, personal_info.*, personal_info.email AS profileup, job_applied.email as applied, job_applied.Remarks, job_applied.Attended FROM applicants LEFT JOIN personal_info ON personal_info.email = applicants.email LEFT JOIN job_applied ON job_applied.email = applicants.email WHERE applicants.verified = 1 AND applicants.isAdmin != 1 ";
 $jres = mysqli_query($connection, $japp);
 
+# for Interviewed candidates
+$Attend = "SELECT firstName, lastName, ShortListed, personal_info.mobileNo,job_applied.email as applied,job_applied.LogicalAssessment, job_applied.LogicalMarks, job_applied.TechnicalAssessment,job_applied.TechnicalMarks,job_applied.InterviewRemarks,job_applied.InterviewMarks FROM job_applied
+INNER JOIN personal_info ON job_applied.email = personal_info.email
+INNER JOIN applicants ON job_applied.email = applicants.email
+WHERE job_applied.Attended = 'yes'";
+$Aexe = mysqli_query($connection, $Attend);
 
+# For short listed candidates
+$short = "SELECT firstName,ShortListed FROM job_applied INNER JOIN applicants on job_applied.email  = applicants.email where ShortListed = 'Yes'";
+$shortq = mysqli_query($connection, $short);
+
+# for Final Candidates
+$final = "SELECT firstName, job_applied.email,mobileNo FROM job_applied INNER JOIN applicants on job_applied.email  = applicants.email where ShortListed = 'Yes'";
+$final_Exe = mysqli_query($connection, $final);
 ?>
 <style>
     .project-tab {
@@ -140,17 +156,17 @@ $jres = mysqli_query($connection, $japp);
                                                     echo '<a class="btn btn-primary" href="uploads/' . $render['FileName'] . '" download>View</a>';
                                                 } ?></td>
                                             <td><?php echo $render['Remarks'] ?></td>
-                                            <td>
-                                            <?php
-                                                if(is_null($render['Attended'])) { ?>
-                                                <i class="fa-solid fa-check text-success" onclick="updateAttendence('<?php echo $render['appid']; ?>','Yes')"></i> 
-                                                / 
-                                                <i class="fa-solid fa-xmark text-danger" onclick="updateAttendence('<?php echo $render['appid']; ?>','No')"></i>
-
-                                                <?php } else{
-                                                        echo $render['Attended'];
+                                            <td id="In-visible">
+                                                <?php
+                                                if (is_null($render['Attended']) && isset($render['applied'])) { ?>
+                                                    <i class="fa-solid fa-check text-success" onclick="updateAttendence('<?php echo $render['appid']; ?>','Yes')"></i>
+                                                    /
+                                                    <i class="fa-solid fa-xmark text-danger" onclick="updateAttendence('<?php echo $render['appid']; ?>','No')"></i>
+                                                <?php } else {
+                                                    echo $render['Attended'];
                                                 } ?>
-                                                
+
+
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -163,16 +179,47 @@ $jres = mysqli_query($connection, $japp);
                                     <tr>
                                         <th scope="col">SI NO</th>
                                         <th scope="col">Name Of The Applicant</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Applied</th>
-                                        <th scope="col">Persnol Info</th>
-                                        <th scope="col">Resume</th>
+                                        <th scope="col">Logical Assessment</th>
+                                        <th scope="col">Score</th>
+                                        <th scope="col">Technical Assessment</th>
+                                        <th scope="col">Score</th>
+                                        <th scope="col"> Interview Remarks</th>
+                                        <th scope="col">Score</th>
+
+                                        <th scope="col">Short Listed</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
+                                    <?php
+                                    $j = 0;
+                                    while ($fetchrows = mysqli_fetch_assoc($Aexe)) {
+                                        $j++; ?>
+                                        <tr>
+                                            <td><?php echo $j; ?></td>
+                                            <td><?php echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; ?></td>
+                                            <td><?php echo $fetchrows['LogicalAssessment'] 
+                                                ?></td>
+                                            <td><?php echo $fetchrows['LogicalMarks'] 
+                                                ?></td>
+                                            <td><?php echo $fetchrows['TechnicalAssessment'] 
+                                                ?></td>
+                                            <td><?php echo $fetchrows['TechnicalMarks'] 
+                                                ?></td>
+                                            <td><?php echo $fetchrows['InterviewRemarks'] 
+                                                ?></td><td><?php echo $fetchrows['InterviewMarks'] 
+                                                ?></td>
+                                            <td>
+                                                <?php if (is_null($fetchrows['ShortListed'])) { ?>
+                                                    <i class="fa-solid fa-check text-success" onclick="shortList('Yes','<?php echo $fetchrows['applied'] ?>')"></i>
+                                                    /
+                                                    <i class="fa-solid fa-xmark text-danger" onclick="shortList('No','<?php echo $fetchrows['applied'] ?>')"></i>
+                                                <?php } else {
+                                                    echo $fetchrows['ShortListed'];
+                                                } ?>
+                                            </td>
+                                        <?php } ?>
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -182,16 +229,65 @@ $jres = mysqli_query($connection, $japp);
                                     <tr>
                                         <th scope="col">SI NO</th>
                                         <th scope="col">Name Of The Applicant</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Applied</th>
-                                        <th scope="col">Persnol Info</th>
-                                        <th scope="col">Resume</th>
+                                        <!-- <th scope="col">Email</th> -->
+                                        <!-- <th scope="col">Phone</th> -->
+                                        <!-- <th scope="col">Address</th> -->
+                                        <!-- <th scope="col">Applied</th> -->
+                                        <!-- <th scope="col">Persnol Info</th> -->
+                                        <th scope="col">Final Candidates</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php
+                                    $k = 0;
+                                    while ($short_fetch = mysqli_fetch_assoc($shortq)) {
+                                        $k++;
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $k; ?></td>
+                                            <td><?php echo $short_fetch['firstName'] ?></td>
 
+                                            <td>
+                                                <?php if (is_null($short_fetch['ShortListed'])) { ?>
+                                                    <i class="fa-solid fa-check text-success"></i>
+                                                    /
+                                                    <i class="fa-solid fa-xmark text-danger"></i>
+                                                <?php } else { ?>
+                                                <?php echo $short_fetch['ShortListed'];
+                                                } ?>
+                                            </td>
+                                        <?php } ?>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="stage-4" role="tabpanel" aria-labelledby="stage-3-tab">
+                            <table class="table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">SI NO</th>
+                                        <th scope="col">Name Of The Applicant</th>
+                                        <th scope="col">Email</th>
+                                         <th scope="col">Phone</th>
+                                        <!-- <th scope="col">Address</th> -->
+                                        <!-- <th scope="col">Applied</th> -->
+                                        <!-- <th scope="col">Persnol Info</th> -->
+                                        <th scope="col">Selected</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $a = 0;
+                                    while ($final_fetch = mysqli_fetch_assoc($final_Exe)) {
+                                        $a++;
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $a; ?></td>
+                                            <td><?php echo $final_fetch['firstName'] ?></td>
+                                            <td><?php echo $final_fetch['email'] ?></td>
+                                            <td><?php echo $final_fetch['mobileNo'] ?></td>
+                                        <?php } ?>
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -381,8 +477,6 @@ $jres = mysqli_query($connection, $japp);
             </div>
         </section>
     <?php } ?>
-
-
 </div>
 
 
@@ -390,19 +484,34 @@ $jres = mysqli_query($connection, $japp);
 include("footer.php");
 ?>
 <script>
-function updateAttendence(email,type){
-    $.ajax({
-        url:"update_attendence.php",
-        method:"post",
-        data:{
-            email,
-            type
-        },
-        success:function(res){
+    function updateAttendence(email, type) {
+        $.ajax({
+            url: "update_attendence.php",
+            method: "post",
+            data: {
+                email,
+                type
+            },
+            success: function(res) {
 
-        }
+            }
 
 
-    })
-}
+        })
+    }
+
+    function shortList(list, gmail) {
+        $.ajax({
+            url: "shortlisted.php",
+            method: "post",
+            data: {
+                list,
+                gmail
+            },
+            success: function(response) {
+
+            }
+
+        })
+    }
 </script>
