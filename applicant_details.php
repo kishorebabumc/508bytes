@@ -162,18 +162,18 @@ $fetch_data = mysqli_fetch_assoc($exeq);
     include('footer.php');
     ?>
     <script>
-        document.getElementById("success").style.display = "none";
-        document.getElementById("remarks-1").style.display = "none";
-        document.getElementById("remarks-2").style.display = "none";
-        document.getElementById("remarks-3").style.display = "none";
+        // document.getElementById("success").style.display = "none";
+        // document.getElementById("remarks-1").style.display = "none";
+        // document.getElementById("remarks-2").style.display = "none";
+        // document.getElementById("remarks-3").style.display = "none";
 
-        <?php if (!is_null($fetch_data['LogicalAssessment'])) { ?>
-            document.getElementById("remarks-1").style.display = "block";
-            document.getElementById("remarks-2").style.display = "block";
-            document.getElementById("remarks-3").style.display = "block";
-        <?php } elseif (!is_null($fetch_data['Remarks'])) { ?>
-            document.getElementById("remarks-1").style.display = "block";
-        <?php } ?>
+        <?php // if (!is_null($fetch_data['LogicalAssessment'])) { ?>
+            // document.getElementById("remarks-1").style.display = "block";
+            // document.getElementById("remarks-2").style.display = "block";
+            // document.getElementById("remarks-3").style.display = "block";
+        <?php // } elseif (!is_null($fetch_data['Remarks'])) { ?>
+            // document.getElementById("remarks-1").style.display = "block";
+        <?php // } ?>
         function upDate() {
             var remarks = document.getElementById("remarks").value;
             var mail = document.getElementById("email").innerText;
@@ -188,7 +188,7 @@ $fetch_data = mysqli_fetch_assoc($exeq);
                     
                     document.getElementById("success").style.display = "table-cell";
                     document.getElementById("success").colSpan = 2;
-                    document.getElementById("remarks-1").style.display = 'block';
+                    // document.getElementById("remarks-1").style.display = 'block';
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX Error:', textStatus, errorThrown);
@@ -212,7 +212,7 @@ $fetch_data = mysqli_fetch_assoc($exeq);
                 success: function(result1) {                
                     document.getElementById("success").style.display = "table-cell";
                     document.getElementById("success").colSpan = 2;
-                    document.getElementById("remarks-2").style.display = 'block';
+                    // document.getElementById("remarks-2").style.display = 'block';
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('AJAX Error:', textStatus, errorThrown);
@@ -237,7 +237,7 @@ $fetch_data = mysqli_fetch_assoc($exeq);
                 },
                 success: function(result2) {                    
                     document.getElementById("success").style.display = "table-cell";
-                    document.getElementById("remarks-3").style.display = "block";
+                    // document.getElementById("remarks-3").style.display = "block";
                     document.getElementById("success").colSpan = 2;
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
