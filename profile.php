@@ -12,7 +12,7 @@ $email = $_SESSION['Email'];
 $sel = "SELECT * FROM applicants left join personal_info on applicants.email = personal_info.email where applicants.email = '$email'";
 $exe = mysqli_query($connection, $sel);
 $ret = mysqli_fetch_assoc($exe);
-$sele = "SELECT * FROM jobs INNER JOIN job_applied on jobs.JobID=job_applied.JobID where email ='$email'";
+$sele = "SELECT * FROM jobs LEFT JOIN job_applied ON jobs.JobID = job_applied.JobID WHERE email = '$email'";
 $exec = mysqli_query($connection, $sele);
 
 $qjob = "SELECT * FROM jobs";
@@ -29,7 +29,7 @@ WHERE job_applied.Attended = 'yes'";
 $Aexe = mysqli_query($connection, $Attend);
 
 # For short listed candidates
-$short = "SELECT firstName,ShortListed FROM job_applied INNER JOIN applicants on job_applied.email  = applicants.email where ShortListed = 'Yes'";
+$short = "SELECT firstName,ShortListed,applicants.email,JobID FROM job_applied INNER JOIN applicants on job_applied.email  = applicants.email where ShortListed = 'Yes'";
 $shortq = mysqli_query($connection, $short);
 
 # for Final Candidates
@@ -198,17 +198,19 @@ $final_Exe = mysqli_query($connection, $final);
                                         <tr>
                                             <td><?php echo $j; ?></td>
                                             <td><a href="applicant_details.php?email=<?php echo $fetchrows['applied']; ?>"><?php echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; ?></a></td>
-                                            <!-- <td><?php // echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; ?></td> -->
-                                            <td><?php echo $fetchrows['LogicalAssessment'] 
+                                            <!-- <td><?php // echo $fetchrows['firstName'] . " " . $fetchrows['lastName']; 
+                                                        ?></td> -->
+                                            <td><?php echo $fetchrows['LogicalAssessment']
                                                 ?></td>
-                                            <td><?php echo $fetchrows['LogicalMarks'] 
+                                            <td><?php echo $fetchrows['LogicalMarks']
                                                 ?></td>
-                                            <td><?php echo $fetchrows['TechnicalAssessment'] 
+                                            <td><?php echo $fetchrows['TechnicalAssessment']
                                                 ?></td>
-                                            <td><?php echo $fetchrows['TechnicalMarks'] 
+                                            <td><?php echo $fetchrows['TechnicalMarks']
                                                 ?></td>
-                                            <td><?php echo $fetchrows['InterviewRemarks'] 
-                                                ?></td><td><?php echo $fetchrows['InterviewMarks'] 
+                                            <td><?php echo $fetchrows['InterviewRemarks']
+                                                ?></td>
+                                            <td><?php echo $fetchrows['InterviewMarks']
                                                 ?></td>
                                             <td>
                                                 <?php if (is_null($fetchrows['ShortListed'])) { ?>
@@ -230,12 +232,8 @@ $final_Exe = mysqli_query($connection, $final);
                                     <tr>
                                         <th scope="col">SI NO</th>
                                         <th scope="col">Name Of The Applicant</th>
-                                        <!-- <th scope="col">Email</th> -->
-                                        <!-- <th scope="col">Phone</th> -->
-                                        <!-- <th scope="col">Address</th> -->
-                                        <!-- <th scope="col">Applied</th> -->
-                                        <!-- <th scope="col">Persnol Info</th> -->
                                         <th scope="col">Final Candidates</th>
+                                        <th>Hired</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -247,7 +245,6 @@ $final_Exe = mysqli_query($connection, $final);
                                         <tr>
                                             <td><?php echo $k; ?></td>
                                             <td><?php echo $short_fetch['firstName'] ?></td>
-
                                             <td>
                                                 <?php if (is_null($short_fetch['ShortListed'])) { ?>
                                                     <i class="fa-solid fa-check text-success"></i>
@@ -256,6 +253,10 @@ $final_Exe = mysqli_query($connection, $final);
                                                 <?php } else { ?>
                                                 <?php echo $short_fetch['ShortListed'];
                                                 } ?>
+                                            </td>
+                                            <td>
+                                                <input type="file" id="upload-file" onchange="uploadFile(this,'<?php echo $short_fetch['email'];?>','<?php echo $short_fetch['JobID'];?>')">
+                                                <button class="btn btn-primary active">Download</button>
                                             </td>
                                         <?php } ?>
                                         </tr>
@@ -269,7 +270,7 @@ $final_Exe = mysqli_query($connection, $final);
                                         <th scope="col">SI NO</th>
                                         <th scope="col">Name Of The Applicant</th>
                                         <th scope="col">Email</th>
-                                         <th scope="col">Phone</th>
+                                        <th scope="col">Phone</th>
                                         <!-- <th scope="col">Address</th> -->
                                         <!-- <th scope="col">Applied</th> -->
                                         <!-- <th scope="col">Persnol Info</th> -->
@@ -427,19 +428,36 @@ $final_Exe = mysqli_query($connection, $final);
                                     <tr>
                                         <th class="p-10">Id</th>
                                         <th>Applied job</th>
-                                        <th>Status</th>
+                                        <th>Short Listed</th>
+                                        <th>DownLoad Offer Letter</th>
+                                        <th>Upload Offer Letter(Signed)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <?php
-
                                     while ($rete = mysqli_fetch_assoc($exec)) {
                                     ?>
                                         <tr>
                                             <td><?php echo $rete['JobID']; ?></td>
                                             <td><?php echo $rete['Description']; ?></td>
-                                            <td>Active</td>
+                                            <td><?php echo $rete['ShortListed']; ?></td>
+                                            <?php if ($rete['ShortListed'] == 'Yes') { ?>
+                                                <td>
+                                                    <a href="<?php echo $rete['OfferLetter']; ?>" class="btn btn-success" download = "offer_letter">Download</a>
+                                                </td>
+                                            <?php } else { ?>
+
+                                            <?php } ?>
+
+                                            <?php if ($rete['ShortListed'] == 'Yes') { ?>
+                                                <td>
+                                                    <input type="file">
+                                                    <button class="btn btn-primary">Upload</button>
+                                                </td>
+                                            <?php } else { ?>
+
+                                            <?php } ?>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -515,4 +533,54 @@ include("footer.php");
 
         })
     }
+
+    function uploadFile(that,email,JobID) {
+        alert("hi")
+        // var upload = document.getElementById("upload-file").value;
+        const file = that.files[0];
+        const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
+        const maxSize = 3 * 1024 * 1024; // 2 MB in bytes
+
+        if (!allowedExtensions.exec(file.name)) {
+            alert("Please upload only PDF or Word documents.");
+            that.value = ""; // Clear the input
+            return;
+        }
+
+        if (file.size > maxSize) {
+            alert("File size must be under 3 MB.");
+            that.value = ""; // Clear the input
+        }
+
+        var formData = new FormData();
+       
+        formData.append('file', file);
+        formData.append('Email', email);
+        formData.append('JobID', JobID);
+        
+
+        $.ajax({
+          url: 'offer_letter.php', // The server-side script that handles the upload
+          type: 'POST',
+          data: formData,
+          processData: false, // Prevent jQuery from processing the data
+          contentType: false, // Prevent jQuery from setting content-type header
+          success: function(response) {
+            alert('File uploaded successfully!');
+            console.log(response);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert('File upload failed: ' + textStatus + ' ' + errorThrown);
+          }
+        });
+    }
+    const inputElement = document.getElementById("EmailAddress");
+    const originalValue = inputElement.value;
+
+    Object.defineProperty(inputElement, 'value', {
+        get: () => originalValue,
+        set: () => originalValue, // Ignore any attempt to change
+        configurable: false,
+
+    });
 </script>
