@@ -255,7 +255,7 @@ $final_Exe = mysqli_query($connection, $final);
                                                 } ?>
                                             </td>
                                             <td>
-                                                <input type="file" id="upload-file" onchange="uploadFile(this,'<?php echo $short_fetch['email'];?>','<?php echo $short_fetch['JobID'];?>')">
+                                                <input type="file" id="upload-file" onchange="uploadFile(this,'<?php echo $short_fetch['email']; ?>','<?php echo $short_fetch['JobID']; ?>'this,'<?php echo $short_fetch['email']; ?>','<?php echo $short_fetch['JobID']; ?>')">
                                                 <button class="btn btn-primary active">Download</button>
                                             </td>
                                         <?php } ?>
@@ -312,10 +312,8 @@ $final_Exe = mysqli_query($connection, $final);
 
         </div> -->
     <?php } else { ?>
-
         <section id="tabs" class="project-tab">
             <div class="container">
-
                 <div class="col-md-12">
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -426,6 +424,7 @@ $final_Exe = mysqli_query($connection, $final);
                             <table class="table" cellspacing="0">
                                 <thead>
                                     <tr>
+                                        <th>Serial No</th>
                                         <th class="p-10">Id</th>
                                         <th>Applied job</th>
                                         <th>Short Listed</th>
@@ -436,29 +435,35 @@ $final_Exe = mysqli_query($connection, $final);
                                 <tbody>
 
                                     <?php
+                                    $a = 0;
                                     while ($rete = mysqli_fetch_assoc($exec)) {
+                                        $a++;
                                     ?>
                                         <tr>
+                                            <td><?php echo $a ?></td>
                                             <td><?php echo $rete['JobID']; ?></td>
                                             <td><?php echo $rete['Description']; ?></td>
                                             <td><?php echo $rete['ShortListed']; ?></td>
                                             <?php if ($rete['ShortListed'] == 'Yes') { ?>
                                                 <td>
-                                                    <a href="<?php echo $rete['OfferLetter']; ?>" class="btn btn-success" download = "offer_letter">Download</a>
+                                                    <a href="<?php echo $rete['OfferLetter']; ?>" class="btn" style="background-color:limegreen; color:white;" download="offer_letter">Download</a>
                                                 </td>
                                             <?php } else { ?>
 
                                             <?php } ?>
 
-                                            <?php if ($rete['ShortListed'] == 'Yes') { ?>
+                                            <?php if ($rete['ShortListed'] == 'Yes' ) { 
+                                                if(!isset($rete['AcceptanceLetter'])){
+                                                ?>
                                                 <td>
-                                                    <input type="file">
-                                                    <button class="btn btn-primary">Upload</button>
+                                                    <input type="file" id="<?php echo $rete['JobID']; ?>" accept="application/pdf">
+                                                    <button class=" btn btn-primary"  id="upload-btn" onclick="Acceptance('<?php echo $rete['email']; ?>','<?php echo $rete['JobID']; ?>')">Upload PDF</button>
                                                 </td>
                                             <?php } else { ?>
-
+                                                <td style="color:limegreen;">Already File Uploaded</td>                                                
                                             <?php } ?>
                                         </tr>
+                                    <?php } ?>
                                     <?php } ?>
                                 </tbody>
                             </table>
@@ -534,8 +539,7 @@ include("footer.php");
         })
     }
 
-    function uploadFile(that,email,JobID) {
-        alert("hi")
+    function uploadFile(that, email, JobID) {
         // var upload = document.getElementById("upload-file").value;
         const file = that.files[0];
         const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
@@ -553,25 +557,25 @@ include("footer.php");
         }
 
         var formData = new FormData();
-       
+
         formData.append('file', file);
         formData.append('Email', email);
         formData.append('JobID', JobID);
-        
+
 
         $.ajax({
-          url: 'offer_letter.php', // The server-side script that handles the upload
-          type: 'POST',
-          data: formData,
-          processData: false, // Prevent jQuery from processing the data
-          contentType: false, // Prevent jQuery from setting content-type header
-          success: function(response) {
-            alert('File uploaded successfully!');
-            console.log(response);
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            alert('File upload failed: ' + textStatus + ' ' + errorThrown);
-          }
+            url: 'offer_letter.php', // The server-side script that handles the upload
+            type: 'POST',
+            data: formData,
+            processData: false, // Prevent jQuery from processing the data
+            contentType: false, // Prevent jQuery from setting content-type header
+            success: function(response) {
+                alert('File uploaded successfully!');
+                console.log(response);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('File upload failed: ' + textStatus + ' ' + errorThrown);
+            }
         });
     }
     const inputElement = document.getElementById("EmailAddress");
@@ -583,4 +587,55 @@ include("footer.php");
         configurable: false,
 
     });
+
+
+    function Acceptance(email, JobID) {
+        // var upload = document.getElementById("upload-file").value;
+        const file = document.getElementById(JobID).files[0];
+        const allowedExtensions = /(\.pdf|\.doc|\.docx)$/i;
+        const maxSize = 3 * 1024 * 1024; // 2 MB in bytes
+
+        if (!file) {
+            alert("Please upload only PDF.");
+            document.getElementById(JobID).value = ""; // Clear the input
+            return;
+        }
+
+        if (!allowedExtensions.exec(file.name)) {
+            alert("Please upload only PDF ");
+            document.getElementById(JobID).value = ""; // Clear the input
+            return;
+        }
+
+        if (file.size > maxSize) {
+            alert("File size must be under 3 MB.");
+            document.getElementById(JobID).value = ""; // Clear the input
+        }
+
+        var formData = new FormData();
+
+        formData.append('file', file);
+        formData.append('Email', email);
+        formData.append('JobID', JobID);
+
+
+        $.ajax({
+            url: 'acceptance_letter.php', // The server-side script that handles the upload
+            type: 'POST',
+            data: formData,
+            processData: false, // Prevent jQuery from processing the data
+            contentType: false, // Prevent jQuery from setting content-type header
+            success: function(response) {
+                document.getElementById("upload-btn").disabled = true;
+                document.getElementById(JobID).disabled = true;
+
+                alert('File uploaded successfully!');
+                console.log(response);
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('File upload failed: ' + textStatus + ' ' + errorThrown);
+            }
+        })
+    }
 </script>

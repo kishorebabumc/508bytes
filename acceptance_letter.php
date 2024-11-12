@@ -2,7 +2,7 @@
 include("session.php");
 include("config.php");
 
-$email = $_POST['Email'];
+$email = $_SESSION['Email'];
 $JobID = $_POST['JobID'];
 
 
@@ -33,15 +33,13 @@ if (!in_array($_FILES["file"]["type"], $allowedTypes)) {
 }
 // Generate a new unique name for the file
 $fileExtension = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION); // Get the file extension
-$newFileName = $email . '_offer_letter.' . $fileExtension; // Generate a unique file name
+$newFileName = $email . 'Acceptance_letter.' . $fileExtension; // Generate a unique file name
 $targetFile = $targetDirectory . $newFileName; // Define the target path with new name
 
 // Check if $uploadOk is true before moving the file
 
-$PerInfoQ = "UPDATE job_applied SET OfferLetter ='$targetFile' WHERE email='$email' AND JobID ='$JobID'";
+$PerInfoQ = "UPDATE job_applied SET AcceptanceLetter ='$targetFile' WHERE email='$email' AND JobID ='$JobID'";
 $PerInfo = mysqli_query($connection, $PerInfoQ);
-
-
 
 if ($uploadOk && move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
     echo "The file has been uploaded successfully as " . $newFileName;
