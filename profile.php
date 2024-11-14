@@ -1,7 +1,5 @@
 <?php
 
-use function PHPUnit\Framework\isNull;
-
 include('session.php');
 if (!isset($_SESSION['Email'])) {
     header("location: career.php");
@@ -255,7 +253,7 @@ $final_Exe = mysqli_query($connection, $final);
                                                 } ?>
                                             </td>
                                             <td>
-                                                <input type="file" id="upload-file" onchange="uploadFile(this,'<?php echo $short_fetch['email']; ?>','<?php echo $short_fetch['JobID']; ?>'this,'<?php echo $short_fetch['email']; ?>','<?php echo $short_fetch['JobID']; ?>')">
+                                                <input type="file" id="upload-file" onchange="uploadFile(this,'<?php echo $short_fetch['email']; ?>','<?php echo $short_fetch['JobID']; ?>')">
                                                 <button class="btn btn-primary active">Download</button>
                                             </td>
                                         <?php } ?>
