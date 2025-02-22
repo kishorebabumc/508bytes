@@ -194,7 +194,7 @@ include("footer.php");
         scanner = new Html5Qrcode("reader");
 
         scanner.start({
-                facingMode: "environment"
+                facingMode: "user"
             }, {
                 fps: 10,
                 qrbox: 250
