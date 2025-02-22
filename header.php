@@ -1,6 +1,8 @@
 <?php
     include('session.php');
-    
+    $query ="SELECT * FROM applicants";
+
+
 ?>
 <html lang="en">
 
@@ -108,14 +110,19 @@
                         <li class="nav-item <?php echo $_SESSION['Page'] == 'career' ? 'active' : ''; ?>">
                             <a class="nav-link" href="career.php">Career</a>
                         </li>
+                        <li class="nav-item <?php echo $_SESSION['Page'] == 'career' ? 'active' : ''; ?>">
+                            <a class="nav-link" href="career.php"></a>
+                        </li>
                         <!-- search button -->
-                        <?php                                                        
+                        <?php              
+                            //  $attendance =                 
                             if(isset($_SESSION['FirstName'])){
                                 echo '<li class="nav-item" >
                                 <div class="dropdown">
                                     <a class="nav-link" >'.$_SESSION['FirstName'].' '.$_SESSION['LastName'].'</a>
                                     <div class="dropdown-content">
                                         <a href="profile.php">Profile</a>
+                                        <a href="emp_attendance.php">Attendance</a>
                                         <a href="logout.php">Logout</a>
                                     </div>
                                 </div>
